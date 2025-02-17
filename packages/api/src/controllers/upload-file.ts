@@ -28,24 +28,20 @@ const uploadQuerySchema = z.object({
 });
 
 /**
- * Sanitize text to handle unsupported Unicode escape sequences from PDFs.
- * 
- * The function does three things:
- * 1. Removes any "\u" that isn’t followed by a hexadecimal digit.
- * 2. For "\u" sequences that are followed by 0–3 hex digits (i.e. incomplete),
- *    the escape indicator is removed so that the trailing characters are preserved as literal text.
- * 3. Escapes any remaining backslashes that are not part of a "\u" sequence.
+ * Sanitize text to handle unsupported Unicode escape sequences.
+ *
+ * This function does the following:
+ * 1. Removes unpaired surrogate characters (which can cause issues in some PDFs).
+ * 2. Uses JSON.stringify to ensure all backslashes and control characters are correctly escaped.
+ * 3. Strips off the surrounding quotes produced by JSON.stringify.
  */
 function sanitizeText(text: string): string {
-  // Remove any "\u" that is not followed by a hex digit.
-  let sanitized = text.replace(/\\u(?![0-9A-Fa-f])/g, "");
-  // Replace incomplete \u sequences (not exactly 4 hex digits) by removing the "\u".
-  sanitized = sanitized.replace(/\\u([0-9A-Fa-f]{0,3})(?![0-9A-Fa-f])/g, (_match, hex) => {
-    return hex.length === 4 ? `\\u${hex}` : hex;
-  });
-  // Escape any backslashes that are not immediately followed by "u".
-  sanitized = sanitized.replace(/\\(?!u)/g, "\\\\");
-  return sanitized;
+  // Remove unpaired high surrogates: A high surrogate without a following low surrogate.
+  let clean = text.replace(/([\uD800-\uDBFF](?![\uDC00-\uDFFF]))/g, "");
+  // Remove unpaired low surrogates: A low surrogate without a preceding high surrogate.
+  clean = clean.replace(/([\uDC00-\uDFFF](?![\uD800-\uDBFF]))/g, "");
+  // Use JSON.stringify to properly escape the string, then remove the surrounding quotes.
+  return JSON.stringify(clean).slice(1, -1);
 }
 
 export const uploadFile = async (req: Request, res: Response) => {
@@ -111,7 +107,7 @@ export const uploadFile = async (req: Request, res: Response) => {
 
     let documents: Document[];
     if (isTextFile) {
-      // For text files, create a single document from the content
+      // For text files, create a single document from the content.
       const textContent = buffer.toString("utf-8");
       documents = [
         new Document({
@@ -120,22 +116,22 @@ export const uploadFile = async (req: Request, res: Response) => {
         }),
       ];
     } else {
-      // For PDFs, use the PDFLoader
+      // For PDFs, use the PDFLoader.
       const loader = new PDFLoader(tempFilePath);
       documents = await loader.load();
     }
 
-    // Clean up temp file
+    // Clean up temp file.
     await unlink(tempFilePath);
 
-    // Split text into chunks
+    // Split text into chunks.
     const splitter = new RecursiveCharacterTextSplitter({
       chunkSize: chunk_size ?? DEFAULT_CHUNK_SIZE,
       chunkOverlap: chunk_overlap ?? DEFAULT_CHUNK_OVERLAP,
     });
     let chunks = await splitter.splitDocuments(documents);
 
-    // Sanitize each chunk's pageContent and add file metadata.
+    // Sanitize each chunk's text and add file metadata.
     chunks = chunks.map((chunk) => {
       chunk.pageContent = sanitizeText(chunk.pageContent);
       chunk.metadata.file_id = fileId;
@@ -143,7 +139,7 @@ export const uploadFile = async (req: Request, res: Response) => {
       return chunk;
     });
 
-    // Create embeddings
+    // Create embeddings.
     const embeddings = new OpenAIEmbeddings({
       modelName: "text-embedding-3-small",
       model: "text-embedding-3-small",
@@ -163,7 +159,7 @@ export const uploadFile = async (req: Request, res: Response) => {
         storage_path: storageData.path,
       });
 
-      // Update Loops contact
+      // Update Loops contact.
       if (apiKeyData.profiles?.email) {
         try {
           updateLoopsContact({
@@ -211,7 +207,6 @@ export const uploadFile = async (req: Request, res: Response) => {
     });
   }
 };
-
 
 
 // import { Request, Response } from "express";
