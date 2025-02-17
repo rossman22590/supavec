@@ -32,7 +32,7 @@ export default function ChatWithPdf() {
           <p className="text-base text-muted-foreground">
             You can build an app like this in minutes with{" "}
             <a
-              href="https://www.supavec.com"
+              href="https://api-rag-aitutor.up.railway.app"
               className="underline text-blue-500"
             >
               {APP_NAME}
@@ -42,7 +42,7 @@ export default function ChatWithPdf() {
         </div>
       </div>
       <Demo />
-      <DemoVideo />
+      {/* <DemoVideo /> */}
       <FAQ />
     </>
   );

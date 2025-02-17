@@ -14,7 +14,7 @@ export const WhyIBuit = () => {
             animationStyle="from-center"
             videoSrc="/supavec-intro.mp4"
             thumbnailSrc="/intro-video-cover.jpg"
-            thumbnailAlt="Why I Built Supavec"
+            thumbnailAlt="Why We NEed RAG"
           />
         </div>
       </div>

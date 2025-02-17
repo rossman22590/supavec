@@ -88,7 +88,7 @@ function ProfileForm() {
           );
 
           router.push(
-            "https://www.supavec.com/login?src=examples-chat-with-pdf"
+            "https://api-rag-aitutor.up.railway.app/login?src=examples-chat-with-pdf"
           );
         }}
       />
