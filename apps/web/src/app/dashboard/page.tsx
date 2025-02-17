@@ -63,7 +63,7 @@ export default async function Page() {
           </Breadcrumb>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-          <div className="rounded-xl p-4 bg-white shadow">
+          <div className="rounded-xl p-4 bg-muted/50">
             <h2 className="text-2xl font-bold mb-4">
               Welcome to AI Tutor RAG API
             </h2>
@@ -133,6 +133,7 @@ export default async function Page() {
     </SidebarProvider>
   );
 }
+
 
 // import { AppSidebar } from "@/components/app-sidebar";
 // import {
