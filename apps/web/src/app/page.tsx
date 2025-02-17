@@ -26,7 +26,7 @@ export default async function Home() {
       {/* <WhyIBuit /> */}
       <WhatIsRag />
       <WhySupavec />
-      <HowToUse />
+      {/* <HowToUse /> */}
       <Community />
       <CTA />
       <Footer />

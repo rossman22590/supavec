@@ -11,8 +11,8 @@ const examples = [
 
 const tools = [
   {
-    title: "Supa Deep Reasearch",
-    href: "https://www.supa-deep-research.com",
+    title: "Deep Reasearch",
+    href: "https://myapps.ai",
   },
 ];
 

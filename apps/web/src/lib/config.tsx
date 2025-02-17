@@ -29,9 +29,9 @@ export const siteConfig = {
     "Workflow Automation",
   ],
   links: {
-    twitter: "https://twitter.com/aitutor",
-    discord: "https://discord.gg/aitutor",
-    github: "https://github.com/aitutor/aitutor",
+    twitter: "https://twitter.com/myaitutor",
+    discord: "https://discord.gg/XZ8XDQQT6Kr",
+    github: "https://github.com/rossman22590/aitutor-api-rag",
   },
   hero: {
     title: "AI Tutor RAG API",
@@ -41,21 +41,21 @@ export const siteConfig = {
   },
   whySupavec: [
     {
-      name: "Full Control with Open Source",
+      name: "Full Control",
       description:
-        "Leverage our open-source RAG API—choose cloud or self-hosting on your own infrastructure. Enjoy complete freedom to adapt and modify your document workflows.",
+        "Leverage our RAG API—choose infrastructure. Enjoy complete freedom to adapt and modify your document workflows.",
       icon: <Code2 className="size-6" />,
     },
     {
       name: "Enterprise-Grade Privacy",
       description:
-        "Implement robust data security with Supabase Row Level Security (RLS) for granular access control. Your data stays private and secure.",
+        "Implement robust data security with  Row Level Security (RLS) for granular access control. Your data stays private and secure.",
       icon: <Lock className="size-6" />,
     },
     {
       name: "Built to Scale",
       description:
-        "Handle millions of documents with ease. Our system supports concurrent processing and horizontal scaling, built on Supabase, Next.js, and TypeScript.",
+        "Handle millions of documents with ease. Our system supports concurrent processing and horizontal scaling, built on AI Tutor, Next.js, and TypeScript.",
       icon: <Scale className="size-6" />,
     },
     {

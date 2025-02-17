@@ -66,7 +66,7 @@ export function Community() {
             >
               <a target="_blank" href={siteConfig.links.github}>
                 <Icons.github className="h-5 w-5" />
-                Become a contributor
+                Start Now
               </a>
             </Button>
           </div>
