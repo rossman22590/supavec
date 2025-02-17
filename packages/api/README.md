@@ -2,4 +2,4 @@
 
 We're working on building more endpoints to support more data sources and manipulations.
 
-The document has been moved to [docs.supavec.com](https://docs.supavec.com/).
+The document has been moved to [docs.supavec.com](https://docs.supavec.com/). 
