@@ -27,10 +27,25 @@ const uploadQuerySchema = z.object({
   chunk_overlap: z.coerce.number().positive().nullish(),
 });
 
-// Sanitize text to handle unsupported Unicode escape sequences from PDFs.
-// This version escapes every backslash so that any sequence like "\u..." is safely passed.
+/**
+ * Sanitize text to handle unsupported Unicode escape sequences from PDFs.
+ * 
+ * The function does three things:
+ * 1. Removes any "\u" that isn’t followed by a hexadecimal digit.
+ * 2. For "\u" sequences that are followed by 0–3 hex digits (i.e. incomplete),
+ *    the escape indicator is removed so that the trailing characters are preserved as literal text.
+ * 3. Escapes any remaining backslashes that are not part of a "\u" sequence.
+ */
 function sanitizeText(text: string): string {
-  return text.replace(/\\/g, '\\\\');
+  // Remove any "\u" that is not followed by a hex digit.
+  let sanitized = text.replace(/\\u(?![0-9A-Fa-f])/g, "");
+  // Replace incomplete \u sequences (not exactly 4 hex digits) by removing the "\u".
+  sanitized = sanitized.replace(/\\u([0-9A-Fa-f]{0,3})(?![0-9A-Fa-f])/g, (_match, hex) => {
+    return hex.length === 4 ? `\\u${hex}` : hex;
+  });
+  // Escape any backslashes that are not immediately followed by "u".
+  sanitized = sanitized.replace(/\\(?!u)/g, "\\\\");
+  return sanitized;
 }
 
 export const uploadFile = async (req: Request, res: Response) => {
@@ -196,6 +211,7 @@ export const uploadFile = async (req: Request, res: Response) => {
     });
   }
 };
+
 
 
 // import { Request, Response } from "express";
