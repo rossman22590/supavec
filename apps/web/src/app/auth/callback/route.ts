@@ -16,7 +16,7 @@ export async function GET(request: Request) {
   } = await supabase.auth.getUser();
 
   // Use NEXT_PUBLIC_API_URL for redirects if it exists, otherwise fall back to requestUrl.origin
-  const baseUrl = process.env.NEXT_PUBLIC_API_URL || requestUrl.origin;
+  const baseUrl = process.env.NEXT_PUBLIC_AUTH_URL || requestUrl.origin;
 
   if (!user) {
     return NextResponse.redirect(`${baseUrl}/login`);
