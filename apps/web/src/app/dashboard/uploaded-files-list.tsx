@@ -3,7 +3,7 @@
 import type { Tables } from "@/types/supabase";
 import { File, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
@@ -16,13 +16,22 @@ export function UploadedFilesList({
 }) {
   const router = useRouter();
   const [isDeleting, setIsDeleting] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  const totalFiles = files?.length || 0;
+  // Filter files based on the search query.
+  const filteredFiles = useMemo(() => {
+    if (!files) return [];
+    return files.filter((file) =>
+      file.file_name?.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [files, searchQuery]);
+
+  const totalFiles = filteredFiles.length;
   const totalPages = Math.ceil(totalFiles / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const displayedFiles = files ? files.slice(startIndex, startIndex + itemsPerPage) : [];
+  const displayedFiles = filteredFiles.slice(startIndex, startIndex + itemsPerPage);
 
   const handleDelete = async (fileId: string, fileName: string) => {
     if (!window.confirm(`Are you sure you want to delete ${fileName}?`)) {
@@ -39,17 +48,13 @@ export function UploadedFilesList({
             "Content-Type": "application/json",
             authorization: apiKey,
           },
-          body: JSON.stringify({
-            file_id: fileId,
-          }),
+          body: JSON.stringify({ file_id: fileId }),
         }
       );
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(
-          errorData.message || `Failed to delete file: ${response.status}`
-        );
+        throw new Error(errorData.message || `Failed to delete file: ${response.status}`);
       }
 
       toast.success("File deleted successfully");
@@ -73,9 +78,23 @@ export function UploadedFilesList({
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
   };
 
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1);
+  };
+
   return (
-    <div className="mt-6">
-      <h3 className="text-lg font-semibold mb-4">Uploaded Files</h3>
+    <div className="mt-6 w-full">
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-lg font-semibold">Uploaded Files</h3>
+        <input
+          type="text"
+          placeholder="Search files..."
+          value={searchQuery}
+          onChange={handleSearchChange}
+          className="border rounded-md px-2 py-1 text-sm"
+        />
+      </div>
       {totalFiles === 0 ? (
         <p className="text-muted-foreground">No files have been uploaded yet.</p>
       ) : (
@@ -96,7 +115,7 @@ export function UploadedFilesList({
                       onClick={() => handleDelete(file.file_id!, file.file_name!)}
                       disabled={isDeleting}
                     >
-                      <Trash2 className="size-5 text-muted-foreground" />
+                      <Trash2 className="h-5 w-5 text-muted-foreground" />
                     </Button>
                   </div>
                 </div>
@@ -111,7 +130,11 @@ export function UploadedFilesList({
               <span className="text-sm text-muted-foreground">
                 Page {currentPage} of {totalPages}
               </span>
-              <Button variant="outline" onClick={handleNextPage} disabled={currentPage === totalPages}>
+              <Button
+                variant="outline"
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages}
+              >
                 Next
               </Button>
             </div>
@@ -121,6 +144,7 @@ export function UploadedFilesList({
     </div>
   );
 }
+
 
 // "use client";
 
