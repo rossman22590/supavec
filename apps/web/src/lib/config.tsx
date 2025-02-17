@@ -30,7 +30,7 @@ export const siteConfig = {
   ],
   links: {
     twitter: "https://twitter.com/myaitutor",
-    discord: "https://discord.gg/XZ8XDQQT6Kr",
+    discord: "hhttps://discord.gg/XZ8XDQQT6K",
     github: "https://github.com/rossman22590/aitutor-api-rag",
   },
   hero: {

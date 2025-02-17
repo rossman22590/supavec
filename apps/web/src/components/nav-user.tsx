@@ -40,7 +40,7 @@ export function NavUser({
       <SidebarMenuItem>
         <SidebarMenuButton asChild tooltip="Discord">
           <Link
-            href="https://go.supavec.com/discord-dashboard"
+            href="https://discord.gg/XZ8XDQQT6K"
             target="target_blank"
           >
             <Icons.discord />
