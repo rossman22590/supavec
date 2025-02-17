@@ -28,10 +28,9 @@ const uploadQuerySchema = z.object({
 });
 
 // Sanitize text to handle unsupported Unicode escape sequences from PDFs.
-// This function finds occurrences of "\u" not immediately followed by exactly 4 hexadecimal digits
-// and escapes the backslash, which prevents Supabase from misinterpreting these sequences.
+// This version escapes every backslash so that any sequence like "\u..." is safely passed.
 function sanitizeText(text: string): string {
-  return text.replace(/\\u(?![0-9a-fA-F]{4})/g, '\\\\u');
+  return text.replace(/\\/g, '\\\\');
 }
 
 export const uploadFile = async (req: Request, res: Response) => {
@@ -197,6 +196,7 @@ export const uploadFile = async (req: Request, res: Response) => {
     });
   }
 };
+
 
 // import { Request, Response } from "express";
 // import { createClient } from "@supabase/supabase-js";
