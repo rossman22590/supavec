@@ -54,19 +54,20 @@ export function AppSidebar({
         url: "/dashboard",
         icon: SquareTerminal,
         isActive: true,
-      },
-      {
-        title: "Documentation",
-        url: "https://docs.supavec.com/",
-        icon: BookOpen,
-        isExternal: true,
-      },
-      {
-        title: "Tutorial",
-        url: "https://go.supavec.com/tutorial-video",
-        icon: Video,
-        isExternal: true,
-      },
+      }
+      // ,
+      // {
+      //   title: "Documentation",
+      //   url: "https://docs.supavec.com/",
+      //   icon: BookOpen,
+      //   isExternal: true,
+      // },
+      // {
+      //   title: "Tutorial",
+      //   url: "https://go.supavec.com/tutorial-video",
+      //   icon: Video,
+      //   isExternal: true,
+      // },
     ],
   };
 
