@@ -23,7 +23,7 @@ export default async function Home() {
     <main>
       <Header isLoggedIn={!!user?.user} />
       <Hero />
-      <WhyIBuit />
+      {/* <WhyIBuit /> */}
       <WhatIsRag />
       <WhySupavec />
       <HowToUse />
