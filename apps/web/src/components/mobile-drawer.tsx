@@ -34,7 +34,7 @@ export function MobileDrawer({ isLoggedIn }: { isLoggedIn: boolean }) {
         </DrawerHeader>
         <DrawerFooter>
           <a
-            href="https://docs.supavec.com/"
+            href="https://support.myapps.ai/"
             target="_blank"
             className={cn(buttonVariants({ variant: "ghost" }), "rounded-full")}
           >

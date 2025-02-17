@@ -21,7 +21,7 @@ export function Header({ isLoggedIn }: { isLoggedIn: boolean }) {
         </Link>
         <div className="hidden lg:flex gap-x-4">
           <a
-            href="https://docs.supavec.com/"
+            href="https://support.myapps.ai"
             target="_blank"
             className={cn(
               buttonVariants({ variant: "ghost" }),
