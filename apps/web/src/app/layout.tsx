@@ -11,7 +11,7 @@ import { CSPostHogProvider } from "./providers";
 export const metadata: Metadata = {
   title: {
     template: `%s - ${APP_NAME}`,
-    default: `${APP_NAME} - RAG for all LLMsm.`,
+    default: `${APP_NAME} - RAG for all LLMs.`,
   },
   metadataBase: new URL("https://api-rag-aitutor.up.railway.app/"),
   alternates: {

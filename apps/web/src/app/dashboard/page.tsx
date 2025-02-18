@@ -29,13 +29,11 @@ export const metadata: Metadata = {
 type ApiKey = {
   api_key: string;
   team_id: string;
-  // ... other fields
 };
 
 export default async function DashboardPage() {
   const supabase = await createClient();
   
-  // Get user profile
   const { data: profile } = await supabase
     .from("profiles")
     .select("id, name, email, onboarding_at")
@@ -45,18 +43,15 @@ export default async function DashboardPage() {
     redirect("/onboarding");
   }
 
-  // Get API keys with type assertion
   const { data: apiKeys } = await supabase
     .from("api_keys")
     .select("*")
     .order('created_at', { ascending: false });
 
-  // Get team memberships
   const { data: teamMemberships } = await supabase
     .from("team_memberships")
     .select("id, teams(name, id)");
 
-  // Get uploaded files only if API key exists
   const { data: uploadedFiles } = apiKeys?.[0]?.team_id 
     ? await supabase
         .from("files")
@@ -66,7 +61,6 @@ export default async function DashboardPage() {
         .order("created_at", { ascending: false })
     : { data: [] };
 
-  // Safely get the first API key
   const activeApiKey = apiKeys && apiKeys.length > 0 ? apiKeys[0].api_key : null;
 
   return (
@@ -98,25 +92,25 @@ export default async function DashboardPage() {
             </p>
           </div>
 
-          {/* API Key Section - Always visible */}
-          <div className="p-4 rounded-xl border bg-muted/50">
-            <h3 className="text-xl font-semibold mb-4">API Key Management</h3>
-            {!activeApiKey ? (
-              <GenerateForm />
-            ) : (
-              <div className="space-y-2">
-                <p className="text-sm text-muted-foreground">Your API key:</p>
-                <code className="px-2 py-1 bg-muted rounded-md text-sm">
-                  {activeApiKey}
-                </code>
-              </div>
-            )}
-          </div>
+          {/* Main Content Area with Grid Layout */}
+          <div className="grid grid-cols-2 gap-4">
+            {/* Left Column - API Key Section */}
+            <div className="p-4 rounded-xl border bg-muted/50">
+              <h3 className="text-xl font-semibold mb-4">API Key Management</h3>
+              {!activeApiKey ? (
+                <GenerateForm />
+              ) : (
+                <div className="space-y-2">
+                  <p className="text-sm text-muted-foreground">Your API key:</p>
+                  <code className="px-2 py-1 bg-muted rounded-md text-sm block w-full overflow-x-auto">
+                    {activeApiKey}
+                  </code>
+                </div>
+              )}
+            </div>
 
-          {/* Features Section - Only visible when API key exists */}
-          {activeApiKey && (
-            <>
-              {/* Embeddings Query Section */}
+            {/* Right Column - Embeddings Query */}
+            {activeApiKey && (
               <div className="p-4 rounded-xl border bg-muted/50">
                 <h3 className="text-xl font-semibold mb-4">Embeddings Query</h3>
                 <EmbeddingsQuery
@@ -124,46 +118,56 @@ export default async function DashboardPage() {
                   apiKey={activeApiKey}
                 />
               </div>
+            )}
+          </div>
 
-              {/* Playground Section */}
-              <div className="mt-4">
-                <h3 className="text-xl font-semibold mb-4">Playground</h3>
-                <div className="rounded-xl bg-muted/50 p-4 border">
-                  <Tabs defaultValue="upload" className="space-y-4">
-                    <TabsList>
-                      <TabsTrigger value="upload">Upload Files</TabsTrigger>
-                      <TabsTrigger value="content">Submit Content</TabsTrigger>
-                    </TabsList>
-                    
-                    <TabsContent value="upload" className="space-y-4">
-                      <div>
-                        <h4 className="text-lg font-semibold mb-4">
-                          File Upload
-                        </h4>
-                        <p className="mb-4">
-                          Upload PDF files to generate embeddings.
-                        </p>
-                        <UploadFormWrapper apiKey={activeApiKey} />
+          {/* Bottom Section - Files Manager */}
+          {activeApiKey && (
+            <div className="mt-4">
+              <div className="rounded-xl bg-muted/50 p-4 border">
+                <Tabs defaultValue="upload" className="space-y-4">
+                  <TabsList className="w-full justify-start">
+                    <TabsTrigger value="upload">Upload Files</TabsTrigger>
+                    <TabsTrigger value="content">Submit Content</TabsTrigger>
+                  </TabsList>
+                  
+                  <TabsContent value="upload" className="space-y-4">
+                    <div>
+                      <h4 className="text-lg font-semibold mb-4">
+                        File Upload
+                      </h4>
+                      <p className="mb-4">
+                        Upload PDF files to generate embeddings.
+                      </p>
+                      <UploadFormWrapper apiKey={activeApiKey} />
+                      {/* Enhanced search and file list */}
+                      <div className="mt-6">
+                        <input 
+                          type="search"
+                          placeholder="Search files..."
+                          className="w-full p-3 rounded-lg border mb-4 text-lg"
+                        />
                         <UploadedFilesList
                           files={uploadedFiles ?? []}
                           apiKey={activeApiKey}
                         />
                       </div>
-                    </TabsContent>
+                    </div>
+                  </TabsContent>
 
-                    <TabsContent value="content">
-                      <ContentSubmission apiKey={activeApiKey} />
-                    </TabsContent>
-                  </Tabs>
-                </div>
+                  <TabsContent value="content">
+                    <ContentSubmission apiKey={activeApiKey} />
+                  </TabsContent>
+                </Tabs>
               </div>
-            </>
+            </div>
           )}
         </div>
       </SidebarInset>
     </SidebarProvider>
   );
 }
+
 
 
 // import { AppSidebar } from "@/components/app-sidebar";
