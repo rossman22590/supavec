@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 export function WhySupavec() {
   return (
-    <Section id="why-supavec" title="Why Supavec?">
+    <Section id="why-supavec" title="Why AI Tutor RAG?">
       <div className="border-x border-t">
         <div className="grid grid-cols-1 md:grid-cols-2">
           {siteConfig.whySupavec.map(
