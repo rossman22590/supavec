@@ -6,6 +6,7 @@ import {
   SquareTerminal,
   GalleryVerticalEnd,
   Video,
+  Code
 } from "lucide-react";
 
 import { NavMain } from "./nav-main";
@@ -62,12 +63,12 @@ export function AppSidebar({
         icon: BookOpen,
         isExternal: true,
       },
-      // {
-      //   title: "Tutorial",
-      //   url: "https://go.supavec.com/tutorial-video",
-      //   icon: Video,
-      //   isExternal: true,
-      // },
+      {
+        title: "Demo App",
+        url: "https://github.com/rossman22590/aitutor-api-rag",
+        icon: Code,
+        isExternal: true,
+      },
     ],
   };
 
