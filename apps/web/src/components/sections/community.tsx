@@ -39,8 +39,7 @@ export function Community() {
         <Ripple />
         <div className="p-6 text-center py-12">
           <p className="text-muted-foreground mb-6 text-balance max-w-prose mx-auto font-medium">
-            We&apos;re grateful for the amazing open-source community that helps
-            make our project better every day.
+          The AI Tutor RAG API makes it super easy to build powerful AI-driven tutoring experiences
           </p>
           <div className="flex justify-center -space-x-6 mb-8">
             {contributors.map((contributor, index) => (
