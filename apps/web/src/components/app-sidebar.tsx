@@ -55,13 +55,13 @@ export function AppSidebar({
         icon: SquareTerminal,
         isActive: true,
       }
-      // ,
-      // {
-      //   title: "Documentation",
-      //   url: "https://docs.supavec.com/",
-      //   icon: BookOpen,
-      //   isExternal: true,
-      // },
+      ,
+      {
+        title: "Documentation",
+        url: "https://support.myapps.ai",
+        icon: BookOpen,
+        isExternal: true,
+      },
       // {
       //   title: "Tutorial",
       //   url: "https://go.supavec.com/tutorial-video",

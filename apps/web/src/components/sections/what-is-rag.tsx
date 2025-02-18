@@ -21,7 +21,7 @@ export const WhatIsRag = () => {
           </p>
         </div>
         <a
-          href="https://docs.supavec.com/#what-is-rag"
+          href="https://support.myapps.ai"
           className={cn(buttonVariants({ variant: "link" }), "px-0 mt-3")}
         >
           Learn more.
