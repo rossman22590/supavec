@@ -94,7 +94,7 @@ export default async function DashboardPage() {
             <p>
               {!activeApiKey
                 ? "Generate your API key to get started with Supavec."
-                : "Use your API key to interact with the Supavec API."}
+                : "Use your API key to interact with the AI Tutor RAG API."}
             </p>
           </div>
 
