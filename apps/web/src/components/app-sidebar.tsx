@@ -64,8 +64,20 @@ export function AppSidebar({
         isExternal: true,
       },
       {
-        title: "Demo App",
+        title: "Demo Code",
         url: "https://github.com/rossman22590/aitutor-api-rag",
+        icon: Code,
+        isExternal: true,
+      },
+      {
+        title: "Demo App",
+        url: "https://aitutor-api-rag.vercel.app",
+        icon: Code,
+        isExternal: true,
+      },
+      {
+        title: "AI Tutor API",
+        url: "https://aitutor-api.vercel.app",
         icon: Code,
         isExternal: true,
       },
