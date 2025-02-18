@@ -59,7 +59,7 @@ export function AppSidebar({
       ,
       {
         title: "Documentation",
-        url: "https://support.myapps.ai",
+        url: "https://support.myapps.ai/aitutor-api/rag-info",
         icon: BookOpen,
         isExternal: true,
       },

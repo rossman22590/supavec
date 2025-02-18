@@ -21,7 +21,7 @@ export function Header({ isLoggedIn }: { isLoggedIn: boolean }) {
         </Link>
         <div className="hidden lg:flex gap-x-4">
           <a
-            href="https://support.myapps.ai"
+            href="https://support.myapps.ai/aitutor-api/rag-info"
             target="_blank"
             className={cn(
               buttonVariants({ variant: "ghost" }),

@@ -21,7 +21,7 @@ export const WhatIsRag = () => {
           </p>
         </div>
         <a
-          href="https://support.myapps.ai"
+          href="https://support.myapps.ai/aitutor-api/rag-info"
           className={cn(buttonVariants({ variant: "link" }), "px-0 mt-3")}
         >
           Learn more.

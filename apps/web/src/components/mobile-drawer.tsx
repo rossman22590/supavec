@@ -34,7 +34,7 @@ export function MobileDrawer({ isLoggedIn }: { isLoggedIn: boolean }) {
         </DrawerHeader>
         <DrawerFooter>
           <a
-            href="https://support.myapps.ai/"
+            href="https://support.myapps.ai/aitutor-api/rag-info"
             target="_blank"
             className={cn(buttonVariants({ variant: "ghost" }), "rounded-full")}
           >
