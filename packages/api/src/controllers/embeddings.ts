@@ -5,6 +5,7 @@ import { OpenAIEmbeddings } from "@langchain/openai";
 import { z } from "zod";
 import type { Database } from "@supavec/web/src/types/supabase";
 import { client } from "../utils/posthog";
+import { logApiUsageAsync } from "../utils/async-logger";
 
 const embeddingsSchema = z.object({
   query: z.string().min(1, "Query is required"),
@@ -131,9 +132,34 @@ export const getEmbeddings = async (req: Request, res: Response) => {
       documents: documentsResponse,
     };
 
+    logApiUsageAsync({
+      endpoint: "/embeddings",
+      userId: validation.apiKeyData.user_id || "",
+      success: true,
+    });
+
     return res.status(200).json(response);
   } catch (error) {
     console.error("Error in embeddings endpoint:", error);
+
+    if (req.headers.authorization) {
+      const apiKey = req.headers.authorization as string;
+      const { data: apiKeyData } = await supabase
+        .from("api_keys")
+        .select("user_id")
+        .match({ api_key: apiKey })
+        .single();
+
+      if (apiKeyData?.user_id) {
+        logApiUsageAsync({
+          endpoint: "/embeddings",
+          userId: apiKeyData.user_id,
+          success: false,
+          error: error instanceof Error ? error.message : "Unknown error",
+        });
+      }
+    }
+
     return res.status(500).json({
       success: false,
       error: "Internal server error",

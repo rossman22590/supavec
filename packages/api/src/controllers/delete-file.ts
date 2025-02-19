@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "@supavec/web/src/types/supabase";
 import { client } from "../utils/posthog";
+import { logApiUsageAsync } from "../utils/async-logger";
 
 const supabase = createClient<Database>(
   process.env.SUPABASE_URL!,
@@ -89,6 +90,12 @@ export const deleteFile = async (req: ValidatedRequest, res: Response) => {
       event: "/delete_file API Call",
     });
 
+    logApiUsageAsync({
+      endpoint: "/delete_file",
+      userId: apiKeyData.user_id || "",
+      success: true,
+    });
+
     return res.json({
       success: true,
       message: "File marked as deleted successfully",
@@ -97,6 +104,25 @@ export const deleteFile = async (req: ValidatedRequest, res: Response) => {
     });
   } catch (error: unknown) {
     console.error("Error deleting file:", error);
+
+    if (req.headers.authorization) {
+      const apiKey = req.headers.authorization as string;
+      const { data: apiKeyData } = await supabase
+        .from("api_keys")
+        .select("user_id")
+        .match({ api_key: apiKey })
+        .single();
+
+      if (apiKeyData?.user_id) {
+        logApiUsageAsync({
+          endpoint: "/delete_file",
+          userId: apiKeyData.user_id,
+          success: false,
+          error: error instanceof Error ? error.message : "Unknown error",
+        });
+      }
+    }
+
     const customError = error as Error;
     const message = customError.message || "Failed to delete file";
     return res.status(500).json({

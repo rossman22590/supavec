@@ -13,6 +13,7 @@ import { Document } from "@langchain/core/documents";
 import { updateLoopsContact } from "../utils/loops";
 import type { Database } from "@supavec/web/src/types/supabase";
 import { client } from "../utils/posthog";
+import { logApiUsageAsync } from "../utils/async-logger";
 
 const DEFAULT_CHUNK_SIZE = 1000;
 const DEFAULT_CHUNK_OVERLAP = 200;
@@ -181,6 +182,12 @@ export const uploadFile = async (req: Request, res: Response) => {
         },
       });
 
+      logApiUsageAsync({
+        endpoint: "/upload_file",
+        userId: apiKeyData.user_id || "",
+        success: true,
+      });
+
       return res.json({
         success: true,
         message: `${isTextFile ? "Text" : "PDF"} file processed successfully`,
@@ -199,6 +206,25 @@ export const uploadFile = async (req: Request, res: Response) => {
     }
   } catch (error) {
     console.error("Error processing file:", error);
+
+    if (req.headers.authorization) {
+      const apiKey = req.headers.authorization as string;
+      const { data: apiKeyData } = await supabase
+        .from("api_keys")
+        .select("user_id")
+        .match({ api_key: apiKey })
+        .single();
+
+      if (apiKeyData?.user_id) {
+        logApiUsageAsync({
+          endpoint: "/upload_file",
+          userId: apiKeyData.user_id,
+          success: false,
+          error: error instanceof Error ? error.message : "Unknown error",
+        });
+      }
+    }
+
     return res.status(500).json({
       success: false,
       error: `Failed to process file${

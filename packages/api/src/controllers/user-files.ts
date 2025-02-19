@@ -3,6 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 import { z } from "zod";
 import type { Database } from "@supavec/web/src/types/supabase";
 import { client } from "../utils/posthog";
+import { logApiUsageAsync } from "../utils/async-logger";
 
 const supabase = createClient<Database>(
   process.env.SUPABASE_URL!,
@@ -80,6 +81,12 @@ export const userFiles = async (req: Request, res: Response) => {
       event: "/user_files API Call",
     });
 
+    logApiUsageAsync({
+      endpoint: "/upload_files",
+      userId: apiKeyData.user_id || "",
+      success: true,
+    });
+
     return res.json({
       success: true,
       results: files,
@@ -90,6 +97,25 @@ export const userFiles = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error("Error fetching user files:", error);
+
+    if (req.headers.authorization) {
+      const apiKey = req.headers.authorization as string;
+      const { data: apiKeyData } = await supabase
+        .from("api_keys")
+        .select("user_id")
+        .match({ api_key: apiKey })
+        .single();
+
+      if (apiKeyData?.user_id) {
+        logApiUsageAsync({
+          endpoint: "/upload_files",
+          userId: apiKeyData.user_id,
+          success: false,
+          error: error instanceof Error ? error.message : "Unknown error",
+        });
+      }
+    }
+
     return res.status(500).json({
       success: false,
       error: `Failed to fetch files${

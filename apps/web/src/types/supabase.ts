@@ -48,6 +48,41 @@ export type Database = {
           },
         ]
       }
+      api_usage_logs: {
+        Row: {
+          created_at: string
+          endpoint: string
+          error: string | null
+          id: string
+          success: boolean
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          endpoint: string
+          error?: string | null
+          id?: string
+          success: boolean
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          endpoint?: string
+          error?: string | null
+          id?: string
+          success?: boolean
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "api_usage_logs_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       documents: {
         Row: {
           content: string | null
@@ -260,6 +295,15 @@ export type Database = {
             }
             Returns: unknown
           }
+      get_recent_user_activity: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          user_id: string
+          signup_date: string
+          api_key_created: boolean
+          file_uploaded: boolean
+        }[]
+      }
       halfvec_avg: {
         Args: {
           "": number[]
