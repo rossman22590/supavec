@@ -1,5 +1,3 @@
-"use client";
-
 import { AppSidebar } from "@/components/app-sidebar";
 import {
   Breadcrumb,
@@ -136,7 +134,7 @@ function DashboardContent({
                       <div className="mt-6">
                         <input 
                           type="search"
-                          placeholder="Search files..."
+                          placeholder="Search your files..." 
                           value={searchQuery}
                           onChange={(e) => setSearchQuery(e.target.value)}
                           className="w-full p-3 rounded-lg border mb-4 text-lg bg-background placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
