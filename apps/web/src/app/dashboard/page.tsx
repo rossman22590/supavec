@@ -1,3 +1,4 @@
+"use client"
 import { AppSidebar } from "@/components/app-sidebar";
 import {
   Breadcrumb,
@@ -18,14 +19,14 @@ import { UploadedFilesList } from "./uploaded-files-list";
 import { EmbeddingsQuery } from "./embeddings-query";
 import { ContentSubmission } from "./content-submission";
 import { redirect } from "next/navigation";
-import type { Metadata } from "next";
+// import type { Metadata } from "next";
 import { UploadFormWrapper } from "./upload-form-wrappper";
 import { useState } from "react";
 import type { Tables } from "@/types/supabase";
 
-export const metadata: Metadata = {
-  robots: "noindex, nofollow",
-};
+// export const metadata: Metadata = {
+//   robots: "noindex, nofollow",
+// };
 
 type Profile = {
   id: string;
