@@ -1,7 +1,7 @@
 "use client";
 
 import type { Tables } from "@/types/supabase";
-import { File, Trash2 } from "lucide-react";
+import { File, Trash2, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useMemo } from "react";
 import { toast } from "sonner";
@@ -11,12 +11,14 @@ interface UploadedFilesListProps {
   files: Tables<"files">[] | null;
   apiKey: string;
   searchQuery: string;
+  onSearchChange: (value: string) => void;
 }
 
 export function UploadedFilesList({
   files,
   apiKey,
   searchQuery,
+  onSearchChange,
 }: UploadedFilesListProps) {
   const router = useRouter();
   const [isDeleting, setIsDeleting] = useState(false);
@@ -82,18 +84,32 @@ export function UploadedFilesList({
 
   return (
     <div className="mt-6 w-full">
-      <div className="mb-4">
-        <h3 className="text-lg font-semibold">Uploaded Files</h3>
+      <div className="mb-4 space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-semibold">Uploaded Files</h3>
+        </div>
+        <div className="relative">
+          <input 
+            type="search"
+            placeholder="Search your files..."
+            value={searchQuery}
+            onChange={(e) => onSearchChange(e.target.value)}
+            className="w-full p-3 rounded-lg border text-lg bg-background placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary pr-10"
+          />
+          <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
+        </div>
       </div>
       {totalFiles === 0 ? (
-        <p className="text-muted-foreground">No files have been uploaded yet.</p>
+        <p className="text-muted-foreground">
+          {searchQuery ? "No files match your search." : "No files have been uploaded yet."}
+        </p>
       ) : (
         <>
           <ul className="space-y-3">
             {displayedFiles.map((file) => (
               <li
                 key={file.id}
-                className="flex items-center justify-between bg-muted p-3 rounded-md"
+                className="flex items-center justify-between bg-muted p-3 rounded-md hover:bg-muted/80 transition-colors"
               >
                 <div className="flex items-center space-x-3 w-full">
                   <File className="h-5 w-5 text-blue-500" />
@@ -104,8 +120,9 @@ export function UploadedFilesList({
                       size="icon"
                       onClick={() => handleDelete(file.file_id!, file.file_name!)}
                       disabled={isDeleting}
+                      className="opacity-0 group-hover:opacity-100 transition-opacity"
                     >
-                      <Trash2 className="h-5 w-5 text-muted-foreground" />
+                      <Trash2 className="h-5 w-5 text-muted-foreground hover:text-red-500 transition-colors" />
                     </Button>
                   </div>
                 </div>
@@ -114,16 +131,22 @@ export function UploadedFilesList({
           </ul>
           {totalPages > 1 && (
             <div className="flex items-center justify-between mt-4">
-              <Button variant="outline" onClick={handlePrevPage} disabled={currentPage === 1}>
+              <Button 
+                variant="outline" 
+                onClick={handlePrevPage} 
+                disabled={currentPage === 1}
+                className="text-sm"
+              >
                 Previous
               </Button>
               <span className="text-sm text-muted-foreground">
                 Page {currentPage} of {totalPages}
               </span>
-              <Button
-                variant="outline"
-                onClick={handleNextPage}
+              <Button 
+                variant="outline" 
+                onClick={handleNextPage} 
                 disabled={currentPage === totalPages}
+                className="text-sm"
               >
                 Next
               </Button>
@@ -227,7 +250,7 @@ export function UploadedFilesList({
 //         <h3 className="text-lg font-semibold">Uploaded Files</h3>
 //         <input
 //           type="text"
-//           placeholder="Search files..."
+//           placeholder="Search files..." 
 //           value={searchQuery}
 //           onChange={handleSearchChange}
 //           className="border rounded-md px-2 py-1 text-sm"

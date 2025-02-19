@@ -27,7 +27,6 @@ export const metadata: Metadata = {
   robots: "noindex, nofollow",
 };
 
-// Update the Profile and TeamMembership types to match Supabase data structure
 type Profile = {
   id: string;
   name: string | null;
@@ -49,7 +48,6 @@ interface DashboardContentProps {
   uploadedFiles: Tables<"files">[] | null;
   activeApiKey: string | null;
 }
-
 
 function DashboardContent({ 
   profile, 
@@ -132,17 +130,11 @@ function DashboardContent({
                       </p>
                       <UploadFormWrapper apiKey={activeApiKey} />
                       <div className="mt-6">
-                        <input 
-                          type="search"
-                          placeholder="Search your files..." 
-                          value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
-                          className="w-full p-3 rounded-lg border mb-4 text-lg bg-background placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-                        />
                         <UploadedFilesList
                           files={uploadedFiles ?? []}
                           apiKey={activeApiKey}
                           searchQuery={searchQuery}
+                          onSearchChange={setSearchQuery}
                         />
                       </div>
                     </div>
@@ -202,7 +194,6 @@ export default async function DashboardPage() {
     />
   );
 }
-
 
 
 // import { AppSidebar } from "@/components/app-sidebar";
