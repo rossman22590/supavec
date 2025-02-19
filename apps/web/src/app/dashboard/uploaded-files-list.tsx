@@ -10,18 +10,15 @@ import { useRouter } from "next/navigation";
 interface UploadedFilesListProps {
   files: Tables<"files">[] | null;
   apiKey: string;
-  searchQuery: string;
-  onSearchChange: (value: string) => void;
 }
 
 export function UploadedFilesList({
   files,
   apiKey,
-  searchQuery,
-  onSearchChange,
 }: UploadedFilesListProps) {
   const router = useRouter();
   const [isDeleting, setIsDeleting] = useState(false);
+  const [searchQuery, setSearchQuery] = useState(""); // Internal search state
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
@@ -82,6 +79,11 @@ export function UploadedFilesList({
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
   };
 
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1); // Reset to first page when searching
+  };
+
   return (
     <div className="mt-6 w-full">
       <div className="mb-4 space-y-4">
@@ -93,7 +95,7 @@ export function UploadedFilesList({
             type="search"
             placeholder="Search your files..."
             value={searchQuery}
-            onChange={(e) => onSearchChange(e.target.value)}
+            onChange={handleSearch}
             className="w-full p-3 rounded-lg border text-lg bg-background placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary pr-10"
           />
           <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
@@ -109,7 +111,7 @@ export function UploadedFilesList({
             {displayedFiles.map((file) => (
               <li
                 key={file.id}
-                className="flex items-center justify-between bg-muted p-3 rounded-md hover:bg-muted/80 transition-colors"
+                className="group flex items-center justify-between bg-muted p-3 rounded-md hover:bg-muted/80 transition-colors"
               >
                 <div className="flex items-center space-x-3 w-full">
                   <File className="h-5 w-5 text-blue-500" />
@@ -157,6 +159,7 @@ export function UploadedFilesList({
     </div>
   );
 }
+
 
 
 // "use client";
