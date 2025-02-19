@@ -74,70 +74,67 @@ export default async function DashboardPage() {
             <h2 className="text-2xl font-bold mb-4">Welcome to AI Tutor RAG API</h2>
             <p>Generate your API key to get started with AI Tutor RAG.</p>
           </div>
-          <div className="min-h-[100vh] flex-1 rounded-xl md:min-h-min p-4">
-            <div className="flex">
-              <div className="p-4 rounded-xl border basis-full md:basis-1/2 bg-muted/50">
-                <h3 className="text-xl font-semibold mb-4">
-                  API Key Generation
-                </h3>
-                <p>Your API key will appear here once generated.</p>
-                {Array.isArray(apiKeys) && apiKeys?.length > 0 ? (
-                  <span className="p-1 text-sm bg-muted-foreground/20 rounded-md">
-                    {apiKeys[0].api_key}
-                  </span>
-                ) : (
-                  <GenerateForm />
-                )}
-              </div>
+          
+          {/* Top row with API Key and Embeddings Query */}
+          <div className="flex gap-4">
+            <div className="flex-1 p-4 rounded-xl border bg-muted/50">
+              <h3 className="text-xl font-semibold mb-4">
+                API Key Generation
+              </h3>
+              <p>Your API key will appear here once generated.</p>
+              {Array.isArray(apiKeys) && apiKeys?.length > 0 ? (
+                <span className="p-1 text-sm bg-muted-foreground/20 rounded-md">
+                  {apiKeys[0].api_key}
+                </span>
+              ) : (
+                <GenerateForm />
+              )}
             </div>
+            
             {Array.isArray(apiKeys) && apiKeys?.length > 0 && (
-              <>
-                <h3 className="text-xl font-semibold mb-4 mt-8">Playground</h3>
-                <div className="flex gap-4 flex-col md:flex-row">
-                  <div className="min-h-[50vh] flex-1 rounded-xl bg-muted/50 md:min-h-min p-4 border">
-                    <Tabs defaultValue="upload" className="space-y-4">
-                      <TabsList>
-                        <TabsTrigger value="upload">Upload files</TabsTrigger>
-                        <TabsTrigger value="content">
-                          Submit Content
-                        </TabsTrigger>
-                      </TabsList>
-                      <TabsContent value="upload" className="space-y-4">
-                        <div className="mt-6">
-                          <h4 className="text-lg font-semibold mb-4">
-                            File Upload
-                          </h4>
-                          <p className="mb-4">
-                            Upload PDF files to generate embeddings.
-                          </p>
-                          <UploadFormWrapper apiKey={apiKeys[0].api_key!} />
-                          <UploadedFilesList
-                            files={uploadedFiles}
-                            apiKey={apiKeys[0].api_key!}
-                          />
-                        </div>
-                      </TabsContent>
-                      <TabsContent value="content">
-                        <ContentSubmission apiKey={apiKeys[0].api_key!} />
-                      </TabsContent>
-                    </Tabs>
-                  </div>
-                  <div className="min-h-[50vh] flex-1 rounded-xl bg-muted/50 md:min-h-min p-4 border">
-                    <EmbeddingsQuery
-                      uploadedFiles={uploadedFiles}
+              <div className="flex-1 p-4 rounded-xl border bg-muted/50">
+                <EmbeddingsQuery
+                  uploadedFiles={uploadedFiles}
+                  apiKey={apiKeys[0].api_key!}
+                />
+              </div>
+            )}
+          </div>
+
+          {/* Full width file upload and list section */}
+          {Array.isArray(apiKeys) && apiKeys?.length > 0 && (
+            <div className="w-full rounded-xl bg-muted/50 p-4 border">
+              <Tabs defaultValue="upload" className="space-y-4">
+                <TabsList>
+                  <TabsTrigger value="upload">Upload files</TabsTrigger>
+                  <TabsTrigger value="content">Submit Content</TabsTrigger>
+                </TabsList>
+                <TabsContent value="upload" className="space-y-4">
+                  <div>
+                    <h4 className="text-lg font-semibold mb-4">
+                      File Upload
+                    </h4>
+                    <p className="mb-4">
+                      Upload PDF files to generate embeddings.
+                    </p>
+                    <UploadFormWrapper apiKey={apiKeys[0].api_key!} />
+                    <UploadedFilesList
+                      files={uploadedFiles}
                       apiKey={apiKeys[0].api_key!}
                     />
                   </div>
-                </div>
-              </>
-            )}
-          </div>
+                </TabsContent>
+                <TabsContent value="content">
+                  <ContentSubmission apiKey={apiKeys[0].api_key!} />
+                </TabsContent>
+              </Tabs>
+            </div>
+          )}
         </div>
       </SidebarInset>
     </SidebarProvider>
   );
 }
-
 
 // import { AppSidebar } from "@/components/app-sidebar";
 // import {
