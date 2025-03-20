@@ -16,7 +16,7 @@ import {
   STRIPE_PRODUCT_IDS,
   SUBSCRIPTION_TIER,
 } from "@/lib/config";
-import { getStartDateForApiUsage } from "@supavec/common/usage";
+import { getStartDateForApiUsage } from "../usage";
 
 type UsageCardProps = {
   initialStorageUsage?: number;
