@@ -13,7 +13,7 @@ export default function TermsOfService() {
       <section className="mb-8">
         <h2 className="text-2xl font-bold mb-4">1. Introduction</h2>
         <p className="mb-4">
-          Welcome to Supavec. These Terms of Service (&ldquo;Terms&rdquo;)
+          Welcome to AI Tutor RAG. These Terms of Service (&ldquo;Terms&rdquo;)
           govern your access to and use of the Supavec platform, website, APIs,
           and services (collectively, the &ldquo;Service&rdquo;). Please read
           these Terms carefully before using our Service.

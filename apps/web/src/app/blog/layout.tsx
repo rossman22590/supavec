@@ -5,7 +5,7 @@ import { Header } from "@/components/sections/header";
 
 export const metadata: Metadata = {
   title: "Blog",
-  description: "Articles and updates from the Supavec team",
+  description: "Articles and updates from the AI Tutor team",
   alternates: {
     canonical: "/blog",
   },

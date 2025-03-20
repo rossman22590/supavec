@@ -63,18 +63,18 @@ export enum SUBSCRIPTION_TIER {
 }
 
 export const siteConfig = {
-  name: "Supavec",
+  name: "AI Tutor RAG",
   description: "Connect your data to LLMs, no matter the source.",
   cta: "Get Started",
   url: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
   keywords: ["Rag As A Service", "Tool Integration", "Workflow Automation"],
   links: {
-    twitter: "https://x.com/supavec_ai",
-    discord: "https://go.supavec.com/discord",
-    github: "https://github.com/taishikato/supavec",
+    twitter: "https://x.com/myaitutor",
+    discord: "https://myapps.ai",
+    github: "https://myapps.ai",
   },
   hero: {
-    title: "Supavec",
+    title: "AI Tutor RAG",
     description:
       "The open-source alternative to Carbon.ai. Build powerful RAG applications with any data source, at any scale.",
     cta: "Get Started",
