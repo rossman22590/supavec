@@ -6,7 +6,7 @@ import {
   STRIPE_PRODUCT_IDS,
   SUBSCRIPTION_TIER,
 } from "../utils/config";
-import { getStartDateForApiUsage } from "@supavec/common/usage";
+import { getStartDateForApiUsage } from "../usage";
 
 export const apiUsageLimit = () => {
   return async (
