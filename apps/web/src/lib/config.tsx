@@ -211,19 +211,19 @@ export const siteConfig = {
     socialLinks: [
       {
         icon: <Icons.github className="size-5" />,
-        url: "https://github.com/taishikato/supavec",
+        url: "#",
       },
       {
         icon: <Icons.twitter className="size-5" />,
-        url: "https://x.com/supavec_ai",
+        url: "https://x.com/tsi_org",
       },
       {
         icon: <Icons.discord className="size-5" />,
-        url: "https://go.supavec.com/discord",
+        url: "$",
       },
       {
         icon: <Linkedin className="size-5" />,
-        url: "https://go.supavec.com/linkedin",
+        url: "#n",
       },
     ],
     // links: [

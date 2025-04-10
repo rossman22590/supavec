@@ -86,7 +86,7 @@ export function AppSidebar({
       },
       {
         title: "Documentation",
-        url: "https://rag-docs.vercel.app/",
+        url: "https://aitutor-rag-api-docs.vercel.app/",
         icon: BookOpen,
         isExternal: true,
       },
