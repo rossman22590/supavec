@@ -239,7 +239,7 @@ export function Pricing({ className }: { className?: string }) {
 
             <p className="mt-6 text-balance text-muted-foreground">
               Choose a plan that fits your API usage needs, from experimenting
-              to building production-ready applications with Supavec&apos;s
+              to building production-ready applications with AI Tutor RAG API's
               powerful vector embedding capabilities.
             </p>
           </div>

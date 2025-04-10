@@ -15,12 +15,12 @@ const faqItems = [
   {
     question: "How does the 14-day refund policy work?",
     answer:
-      "If you&apos;re not satisfied with our service for any reason, simply contact our support team within 14 days of your purchase for a full refund. No questions asked.",
+      "If you're not satisfied with our service for any reason, simply contact our support team within 14 days of your purchase for a full refund. No questions asked.",
   },
   {
     question: "Can I switch between plans?",
     answer:
-      "Yes, you can upgrade or downgrade your plan at any time. When upgrading, you&apos;ll be prorated for the remainder of your billing cycle. When downgrading, changes will take effect at the start of your next billing cycle.",
+      "Yes, you can upgrade or downgrade your plan at any time. When upgrading, you'll be prorated for the remainder of your billing cycle. When downgrading, changes will take effect at the start of your next billing cycle.",
   },
   {
     question: "Do you offer team discounts?",
@@ -45,12 +45,12 @@ export default async function PricingPage() {
               Simple pricing for everyone
             </h1>
             <p className="mt-6 text-xl text-muted-foreground max-w-3xl mx-auto">
-              Choose an affordable plan that&apos;s packed with the best
+              Choose an affordable plan that's packed with the best
               features for engaging your audience, creating customer loyalty,
               and driving sales.
             </p>
             <p className="mt-4 text-lg text-primary font-medium max-w-3xl mx-auto">
-              100% refund within 14 days if you don&apos;t love it. No questions
+              100% refund within 14 days if you don't love it. No questions
               asked.
             </p>
           </div>
