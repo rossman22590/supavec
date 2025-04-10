@@ -20,7 +20,7 @@ const stats = [
     title: "100+",
     subtitle: "Discord Members",
     icon: <Icons.discord className="size-5" />,
-    link: "https://go.supavec.com/discord",
+    link: "#",
   },
 ];
 
