@@ -86,13 +86,13 @@ export function AppSidebar({
       },
       {
         title: "Documentation",
-        url: "https://docs.supavec.com/",
+        url: "https://rag-docs.vercel.app/",
         icon: BookOpen,
         isExternal: true,
       },
       {
         title: "Tutorial",
-        url: "https://go.supavec.com/tutorial-video",
+        url: "#",
         icon: Video,
         isExternal: true,
       },

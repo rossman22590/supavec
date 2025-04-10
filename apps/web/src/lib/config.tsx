@@ -69,9 +69,9 @@ export const siteConfig = {
   url: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
   keywords: ["Rag As A Service", "Tool Integration", "Workflow Automation"],
   links: {
-    twitter: "https://x.com/supavec_ai",
-    discord: "https://go.supavec.com/discord",
-    github: "https://github.com/taishikato/supavec",
+    twitter: "https://x.com/tsi_org",
+    discord: "#",
+    github: "#",
   },
   hero: {
     title: "Supavec",
