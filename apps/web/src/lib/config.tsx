@@ -158,7 +158,7 @@ export const siteConfig = {
       },
       description: "Try AI Tutor RAG API with limited usage.",
       features: [
-        "20 API calls per month",
+        "50 API calls per month",
         "All supported file types",
         "5 requests per minute",
         "Community support",
