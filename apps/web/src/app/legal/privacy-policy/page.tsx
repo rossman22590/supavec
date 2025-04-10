@@ -276,10 +276,10 @@ export default function PrivacyPolicy() {
           <li>
             Through our Discord community:{" "}
             <a
-              href="https://go.supavec.com/discord"
+              href="#"
               className="text-blue-600 hover:underline"
             >
-              https://go.supavec.com/discord
+              https://support.myapps.ai
             </a>
           </li>
         </ul>

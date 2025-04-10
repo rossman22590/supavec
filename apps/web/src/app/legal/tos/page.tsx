@@ -465,12 +465,12 @@ export default function TermsOfService() {
           <li>
             Through our Discord community:{" "}
             <a
-              href="https://go.supavec.com/discord"
+              href="https://support.myapps.ai"
               className="text-blue-600 hover:underline"
               target="_blank"
               rel="noopener noreferrer"
             >
-              https://go.supavec.com/discord
+              https://support.myapps.ai
             </a>
           </li>
         </ul>
