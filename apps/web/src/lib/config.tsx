@@ -167,7 +167,7 @@ export const siteConfig = {
     },
     {
       name: "Basic",
-      price: { monthly: "$19", yearly: "$190" },
+      price: { monthly: "$25", yearly: "$300" },
       frequency: { monthly: "month", yearly: "year" },
       priceId: {
         monthly: process.env.NEXT_PUBLIC_STRIPE_PRICE_BASIC_MONTHLY as string,
