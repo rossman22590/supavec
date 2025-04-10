@@ -33,6 +33,7 @@ export function UsageCard({
 
   const [apiCallUsage, setApiCallUsage] = useState(0);
   const [apiCallLimit, setApiCallLimit] = useState(API_CALL_LIMITS.FREE);
+  const [apiCallOverride, setApiCallOverride] = useState<number | null>(null);
   const nextUsageResetDate = getNextUsageResetDate(lastUsageResetAt);
 
   // Map the stripe_subscribed_product_id to the appropriate tier name
@@ -77,6 +78,24 @@ export function UsageCard({
         // Set limits based on subscription tier
         const limits = getLimits(subscriptionTier);
         setApiCallLimit(limits.apiCalls);
+
+        // Check if there's an API calls override for the user
+        const { data: user } = await supabase.auth.getUser();
+        
+        if (user?.user?.id) {
+          // Get the team membership for this user
+          const { data: teamMemberships } = await supabase
+            .from("team_memberships")
+            .select("api_calls_override, team_id")
+            .eq("profile_id", user.user.id)
+            .maybeSingle();
+            
+          if (teamMemberships?.api_calls_override) {
+            // If there's an override, use it instead of the tier-based limit
+            setApiCallOverride(teamMemberships.api_calls_override);
+            setApiCallLimit(teamMemberships.api_calls_override);
+          }
+        }
 
         // Get usage start date based on last_usage_reset_at
         const usageStartDate = getStartDateForApiUsage(lastUsageResetAt);
@@ -129,6 +148,9 @@ export function UsageCard({
             </div>
             <div className="font-medium">
               {isLoading ? "Loading..." : `${apiCallUsage} / ${apiCallLimit}`}
+              {apiCallOverride && (
+                <span className="ml-2 text-xs text-primary">(Custom limit)</span>
+              )}
             </div>
             <div className="mt-1 h-2 w-full rounded-full bg-secondary">
               <div

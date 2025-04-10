@@ -250,18 +250,21 @@ export type Database = {
           joined_at: string
           profile_id: string
           team_id: string
+          api_calls_override: number | null
         }
         Insert: {
           id?: string
           joined_at?: string
           profile_id: string
           team_id: string
+          api_calls_override?: number | null
         }
         Update: {
           id?: string
           joined_at?: string
           profile_id?: string
           team_id?: string
+          api_calls_override?: number | null
         }
         Relationships: [
           {
@@ -610,4 +613,3 @@ export type CompositeTypes<
   : PublicCompositeTypeNameOrOptions extends keyof PublicSchema["CompositeTypes"]
     ? PublicSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
     : never
-
