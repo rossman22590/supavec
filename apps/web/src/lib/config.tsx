@@ -67,23 +67,23 @@ export const siteConfig = {
   description: "Connect your data to LLMs, no matter the source.",
   cta: "Get Started",
   url: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
-  keywords: ["Rag As A Service", "Tool Integration", "Workflow Automation"],
+  keywords: ["RAG As A Service", "Tool Integration", "Workflow Automation"],
   links: {
     twitter: "https://x.com/tsi_org",
     discord: "#",
-    github: "#",
+    github: "",
   },
   hero: {
-    title: "AI Tutor RAG",
+    title: "AI Tutor RAG API",
     description:
-      "The open-source alternative to Carbon.ai. Build powerful RAG applications with any data source, at any scale.",
+      "Build powerful RAG applications with any data source, at any scale.",
     cta: "Get Started",
   },
   whySupavec: [
     {
-      name: "Full Control with Open Source",
+      name: "Full Control",
       description:
-        "Choose between our cloud version or self-host on your infrastructure - unlike Carbon.ai, you're never locked in. Fully open source under MIT license, giving you the freedom to adapt and modify.",
+        "Choose between our cloud version or self-host on your infrastructure - you're never locked in. Giving you the freedom to adapt and modify.",
       icon: <Code2 className="size-6" />,
     },
     {
@@ -156,7 +156,7 @@ export const siteConfig = {
           process.env.NEXT_PUBLIC_STRIPE_PRICE_FREE_YEARLY ||
           "price_free_yearly",
       },
-      description: "Try Supavec with limited usage.",
+      description: "Try AI Tutor RAG API with limited usage.",
       features: [
         "100 API calls per month",
         "All supported file types",
@@ -210,20 +210,16 @@ export const siteConfig = {
   footer: {
     socialLinks: [
       {
-        icon: <Icons.github className="size-5" />,
-        url: "#",
-      },
-      {
         icon: <Icons.twitter className="size-5" />,
         url: "https://x.com/tsi_org",
       },
       {
         icon: <Icons.discord className="size-5" />,
-        url: "$",
+        url: "#",
       },
       {
         icon: <Linkedin className="size-5" />,
-        url: "#n",
+        url: "#",
       },
     ],
     // links: [
@@ -231,7 +227,7 @@ export const siteConfig = {
     //   { text: "Contact", url: "#" },
     // ],
     bottomText: "All rights reserved.",
-    brandText: "RAG API",
+    brandText: "AI Tutor RAG API",
   },
 };
 

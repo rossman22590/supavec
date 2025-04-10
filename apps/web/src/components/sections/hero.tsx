@@ -69,7 +69,7 @@ function HeroTitles() {
           }}
         >
           <AuroraText className="leading-normal">
-            {siteConfig.hero.title}
+            {siteConfig.hero.title.replace("Supavec", "AI Tutor RAG API")}
           </AuroraText>
         </motion.span>
       </motion.h1>
@@ -83,7 +83,7 @@ function HeroTitles() {
           ease,
         }}
       >
-        {siteConfig.hero.description}
+        {siteConfig.hero.description.replace("Supavec", "AI Tutor RAG API")}
       </motion.p>
     </div>
   );
@@ -106,12 +106,13 @@ function HeroCTA() {
           )}
         >
           <Icons.logo className="h-6 w-6" />
-          {siteConfig.hero.cta}
+          {siteConfig.hero.cta.replace("Supavec", "AI Tutor RAG API")}
         </Link>
       </motion.div>
     </div>
   );
 }
+
 const LazySpline = lazy(() => import("@splinetool/react-spline"));
 
 export function Hero() {
@@ -144,18 +145,8 @@ export function Hero() {
     <Section id="hero">
       <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-x-8 w-full p-6 lg:p-12 border-x overflow-hidden">
         <div className="flex flex-col justify-start items-start lg:col-span-1">
-          {/* <HeroPill /> */}
-          <a
-            href="https://www.producthunt.com/posts/supavec?embed=true&utm_source=badge-top-post-badge&utm_medium=badge&utm_souce=badge-supavec"
-            target="_blank"
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=871672&theme=dark&period=daily&t=1739785669388"
-              alt="Supavec - The&#0032;open&#0032;source&#0032;RAG&#0032;as&#0032;a&#0032;service&#0032;platform | Product Hunt"
-              className="w-[250px] h-[54px]"
-            />
-          </a>
+          {/* Hero spacing element */}
+          <div className="h-[54px]"></div>
           <HeroTitles />
           <HeroCTA />
         </div>

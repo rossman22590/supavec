@@ -6,9 +6,9 @@ import { BrainCircuit } from "lucide-react";
 const stats = [
   {
     title: "500+",
-    subtitle: "Stars on GitHub",
+    subtitle: "Projects Integrated",
     icon: <Icons.github className="size-5" />,
-    link: "https://github.com/taishikato/supavec",
+    link: "#",
   },
   {
     title: "200k+",
@@ -17,10 +17,10 @@ const stats = [
     link: `${process.env.NEXT_PUBLIC_APP_URL}/login`,
   },
   {
-    title: "100+",
+    title: "500+",
     subtitle: "Discord Members",
     icon: <Icons.discord className="size-5" />,
-    link: "#",
+    link: "",
   },
 ];
 

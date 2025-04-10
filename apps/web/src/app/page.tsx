@@ -4,7 +4,7 @@ import { Hero } from "@/components/sections/hero";
 import { FeaturedSection } from "@/components/sections/featured-section";
 import { WhyIBuit } from "@/components/sections/why-i-built";
 import { WhatIsRag } from "@/components/sections/what-is-rag";
-import { WhySupavec } from "@/components/sections/why-supavec";
+import { WhyChooseUs } from "@/components/sections/why-supavec";
 import { HowToUse } from "@/components/sections/how-to-use";
 import { Testimonials } from "@/components/sections/testimonials";
 import { Community } from "@/components/sections/community";
@@ -16,7 +16,7 @@ import { Statistics } from "@/components/sections/statistics";
 
 export const metadata: Metadata = {
   description:
-    "The open-source alternative to Carbon.ai. Build powerful RAG applications with any data source, at any scale.",
+    "Build powerful RAG applications with any data source, at any scale.",
 };
 
 export default async function Home() {
@@ -24,12 +24,12 @@ export default async function Home() {
     <main>
       <Header />
       <Hero />
-      <FeaturedSection />
-      <WhyIBuit />
+      {/* <FeaturedSection /> */}
+      {/* <WhyIBuit /> */}
       <WhatIsRag />
-      <WhySupavec />
+      <WhyChooseUs />
       <SenjaTestimonials />
-      <HowToUse />
+      {/* <HowToUse /> */}
       <Statistics />
       <Testimonials />
       <Pricing className="mt-[-49px] bg-background relative z-10" />

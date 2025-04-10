@@ -12,8 +12,8 @@ const examples = [
 
 const tools = [
   {
-    title: "Supa Deep Reasearch",
-    href: "https://www.supa-deep-research.com",
+    title: "Support",
+    href: "https://support.myapps.ai",
   },
 ];
 
@@ -30,7 +30,7 @@ const links = [
   },
   {
     title: "API Docs",
-    href: "https://go.supavec.com/docs",
+    href: "https://aitutor-rag-api-docs.vercel.app/",
     external: true,
   },
 ];

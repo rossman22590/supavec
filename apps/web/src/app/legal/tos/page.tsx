@@ -13,8 +13,8 @@ export default function TermsOfService() {
       <section className="mb-8">
         <h2 className="text-2xl font-bold mb-4">1. Introduction</h2>
         <p className="mb-4">
-          Welcome to Supavec. These Terms of Service (&ldquo;Terms&rdquo;)
-          govern your access to and use of the Supavec platform, website, APIs,
+          Welcome to AI Tutor RAG API. These Terms of Service (&ldquo;Terms&rdquo;)
+          govern your access to and use of the AI Tutor RAG API platform, website, APIs,
           and services (collectively, the &ldquo;Service&rdquo;). Please read
           these Terms carefully before using our Service.
         </p>
@@ -29,9 +29,9 @@ export default function TermsOfService() {
         <h2 className="text-2xl font-bold mb-4">2. Definitions</h2>
         <ul className="list-disc pl-8 mb-4">
           <li className="mb-2">
-            <strong>&ldquo;Supavec&rdquo;</strong>,{" "}
+            <strong>&ldquo;AI Tutor RAG API&rdquo;</strong>,{" "}
             <strong>&ldquo;we&rdquo;</strong>, <strong>&ldquo;us&rdquo;</strong>
-            , or <strong>&ldquo;our&rdquo;</strong> refers to Supavec, the
+            , or <strong>&ldquo;our&rdquo;</strong> refers to AI Tutor RAG API, the
             provider of the Service.
           </li>
           <li className="mb-2">
@@ -83,24 +83,14 @@ export default function TermsOfService() {
 
         <h3 className="text-xl font-semibold mb-3">4.1 RAG Platform</h3>
         <p className="mb-4">
-          Supavec is an open-source Retrieval-Augmented Generation (RAG)
+          AI Tutor RAG API is a Retrieval-Augmented Generation (RAG)
           platform that helps developers integrate AI with their data. Users can
           upload documents via API and query them using natural language.
         </p>
 
-        <h3 className="text-xl font-semibold mb-3">
-          4.2 Open Source and Self-Hosting
-        </h3>
-        <p className="mb-4">
-          Our core technology is available as open source software under the MIT
-          license. You may use the open-source version for self-hosting
-          according to the terms of the MIT license.
-        </p>
-
-        <h3 className="text-xl font-semibold mb-3">4.3 Cloud Service</h3>
         <p className="mb-4">
           We also offer a cloud-hosted version of the Service that provides
-          additional features and capabilities beyond the open-source version.
+          additional features and capabilities.
         </p>
       </section>
 
@@ -136,13 +126,16 @@ export default function TermsOfService() {
         </h3>
         <p className="mb-4">
           You retain all rights to your Content. By uploading Content to the
-          Service, you grant Supavec a worldwide, non-exclusive, royalty-free
-          license to use, copy, store, transmit, and process your Content solely
-          to the extent necessary to provide and maintain the Service.
+          Service, you grant AI Tutor RAG API a worldwide, non-exclusive,
+          royalty-free license to use, copy, store, transmit, and process your
+          Content solely to the extent necessary to provide and maintain the
+          Service.
         </p>
 
         <h3 className="text-xl font-semibold mb-3">6.2 Content Restrictions</h3>
-        <p className="mb-4">You agree not to upload Content that:</p>
+        <p className="mb-4">
+          You agree not to upload Content that:
+        </p>
         <ul className="list-disc pl-8 mb-4">
           <li>Infringes on the intellectual property rights of others</li>
           <li>Violates any applicable laws or regulations</li>
@@ -166,28 +159,13 @@ export default function TermsOfService() {
         </h2>
 
         <h3 className="text-xl font-semibold mb-3">
-          7.1 Supavec Intellectual Property
+          7.1 AI Tutor RAG API Intellectual Property
         </h3>
         <p className="mb-4">
           The Service and its original content (excluding your Content),
-          features, and functionality are owned by Supavec and are protected by
-          international copyright, trademark, patent, trade secret, and other
-          intellectual property laws.
-        </p>
-
-        <h3 className="text-xl font-semibold mb-3">7.2 Open Source Software</h3>
-        <p className="mb-4">
-          Portions of our software are available under the MIT license, the
-          terms of which are available at{" "}
-          <a
-            href="https://opensource.org/licenses/MIT"
-            className="text-blue-600 hover:underline"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            https://opensource.org/licenses/MIT
-          </a>
-          .
+          features, and functionality are owned by AI Tutor RAG API and are
+          protected by international copyright, trademark, patent, trade secret,
+          and other intellectual property laws.
         </p>
 
         <h3 className="text-xl font-semibold mb-3">7.3 Feedback</h3>
@@ -245,16 +223,10 @@ export default function TermsOfService() {
           9.1 Integration with Third-Party Services
         </h3>
         <p className="mb-4">
-          The Service may integrate with or allow access to third-party
-          services. Your use of these third-party services is governed by their
-          respective terms of service and privacy policies.
-        </p>
-
-        <h3 className="text-xl font-semibold mb-3">9.2 Third-Party Links</h3>
-        <p className="mb-4">
-          The Service may contain links to third-party websites or resources
-          that are not owned or controlled by Supavec. We are not responsible
-          for the content or availability of such external sites or resources.
+          The Service may integrate with third-party services or contain links
+          that are not owned or controlled by AI Tutor RAG API. We are not
+          responsible for the content or availability of such external sites or
+          resources.
         </p>
       </section>
 
@@ -275,11 +247,11 @@ export default function TermsOfService() {
       <section className="mb-8">
         <h2 className="text-2xl font-bold mb-4">11. Limitation of Liability</h2>
         <p className="mb-4 uppercase">
-          IN NO EVENT SHALL SUPAVEC, ITS DIRECTORS, EMPLOYEES, PARTNERS, AGENTS,
-          SUPPLIERS, OR AFFILIATES BE LIABLE FOR ANY INDIRECT, INCIDENTAL,
-          SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING WITHOUT
-          LIMITATION, LOSS OF PROFITS, DATA, USE, GOODWILL, OR OTHER INTANGIBLE
-          LOSSES, RESULTING FROM:
+          IN NO EVENT SHALL AI Tutor RAG API, ITS DIRECTORS, EMPLOYEES, PARTNERS,
+          AGENTS, SUPPLIERS, OR AFFILIATES BE LIABLE FOR ANY INDIRECT,
+          INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING
+          WITHOUT LIMITATION, LOSS OF PROFITS, DATA, USE, GOODWILL, OR OTHER
+          INTANGIBLE LOSSES, RESULTING FROM:
         </p>
         <ul className="list-disc pl-8 mb-4 uppercase">
           <li>
@@ -302,8 +274,8 @@ export default function TermsOfService() {
       <section className="mb-8">
         <h2 className="text-2xl font-bold mb-4">12. Indemnification</h2>
         <p className="mb-4">
-          You agree to defend, indemnify, and hold harmless Supavec and its
-          licensors, service providers, and their respective officers,
+          You agree to defend, indemnify, and hold harmless AI Tutor RAG API and
+          its licensors, service providers, and their respective officers,
           directors, employees, contractors, agents, licensors, suppliers,
           successors, and assigns from and against any claims, liabilities,
           damages, judgments, awards, losses, costs, expenses, or fees
@@ -414,8 +386,8 @@ export default function TermsOfService() {
 
         <h3 className="text-xl font-semibold mb-3">17.1 Entire Agreement</h3>
         <p className="mb-4">
-          These Terms constitute the entire agreement between you and Supavec
-          regarding the Service and supersede all prior agreements and
+          These Terms constitute the entire agreement between you and AI Tutor
+          RAG API regarding the Service and supersede all prior agreements and
           understandings.
         </p>
 
@@ -463,7 +435,7 @@ export default function TermsOfService() {
             </a>
           </li>
           <li>
-            Through our Discord community:{" "}
+            Through our website:{" "}
             <a
               href="https://support.myapps.ai"
               className="text-blue-600 hover:underline"

@@ -13,11 +13,11 @@ export default function PrivacyPolicy() {
       <section className="mb-8">
         <h2 className="text-2xl font-bold mb-4">Introduction</h2>
         <p className="mb-4">
-          Welcome to Supavec (&ldquo;we,&rdquo; &ldquo;our,&rdquo; or
+          Welcome to AI Tutor RAG API (&ldquo;we,&rdquo; &ldquo;our,&rdquo; or
           &ldquo;us&rdquo;). We are committed to protecting your privacy and
           handling your data with transparency and care. This Privacy Policy
           explains how we collect, use, disclose, and safeguard your information
-          when you use our platform, website (https://www.supavec.com), and
+          when you use our platform, website (https://www.myapps.ai), and
           related services (collectively, the &ldquo;Service&rdquo;).
         </p>
         <p className="mb-4">
