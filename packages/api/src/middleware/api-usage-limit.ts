@@ -78,6 +78,38 @@ export const apiUsageLimit = () => {
         });
       }
 
+      // Check for team membership and API call override
+      let teamMembership = null;
+      let hasApiCallOverride = false;
+
+      if (teamId) {
+        console.log(
+          `[API-LIMIT][${requestId}] Checking for API call override in team_memberships for user ${userId}, team ${teamId}`,
+        );
+
+        const { data: membershipData, error: membershipError } = await supabase
+          .from("team_memberships")
+          .select("api_calls_override")
+          .match({ user_id: userId, team_id: teamId })
+          .single();
+
+        if (membershipError) {
+          console.warn(
+            `[API-LIMIT][${requestId}] Error fetching team membership: ${membershipError.message}`,
+          );
+          // Continue with standard limits if membership check fails
+        } else if (membershipData) {
+          teamMembership = membershipData;
+          hasApiCallOverride = !!teamMembership.api_calls_override;
+          
+          if (hasApiCallOverride) {
+            console.log(
+              `[API-LIMIT][${requestId}] Found API call override for user ${userId}: ${teamMembership.api_calls_override}`,
+            );
+          }
+        }
+      }
+
       console.log(
         `[API-LIMIT][${requestId}] Fetching subscription data for user ${userId}`,
       );
@@ -120,8 +152,17 @@ export const apiUsageLimit = () => {
         }
       }
 
+      // Apply override if available
+      if (hasApiCallOverride && teamMembership?.api_calls_override) {
+        console.log(
+          `[API-LIMIT][${requestId}] Applying API call override: ${teamMembership.api_calls_override} instead of tier limit: ${apiCallLimit}`,
+        );
+        apiCallLimit = teamMembership.api_calls_override;
+        // Don't modify tierName as it must remain a valid SUBSCRIPTION_TIER enum value
+      }
+
       console.log(
-        `[API-LIMIT][${requestId}] User subscription tier: ${tierName}, API call limit: ${apiCallLimit}`,
+        `[API-LIMIT][${requestId}] User subscription tier: ${tierName}${hasApiCallOverride ? ' (with override)' : ''}, API call limit: ${apiCallLimit}`,
       );
 
       // Get usage start date based on last_usage_reset_at
@@ -160,7 +201,8 @@ export const apiUsageLimit = () => {
       );
 
       // Check if the user has exceeded their API call limit
-      if (apiCallCount >= apiCallLimit) {
+      // Only block if they exceed their limit AND don't have an override
+      if (apiCallCount >= apiCallLimit && !hasApiCallOverride) {
         console.warn(
           `[API-LIMIT][${requestId}] API call limit exceeded for user ${userId} - Usage: ${apiCallCount}/${apiCallLimit}`,
         );
@@ -170,6 +212,10 @@ export const apiUsageLimit = () => {
           limit: apiCallLimit,
           usage: apiCallCount,
         });
+      } else if (apiCallCount >= apiCallLimit && hasApiCallOverride) {
+        console.warn(
+          `[API-LIMIT][${requestId}] User ${userId} has exceeded standard limit but continues with override - Usage: ${apiCallCount}/${apiCallLimit}`,
+        );
       }
 
       // Log when users are approaching their limit (80% or more)

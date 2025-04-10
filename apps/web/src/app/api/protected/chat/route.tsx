@@ -1,8 +1,24 @@
 import { type Message, createDataStreamResponse, streamText } from "ai";
 import { getMostRecentUserMessage } from "@/lib/utils";
 import { openai } from "@ai-sdk/openai";
+import { createClient } from "@/utils/supabase/server";
+import { canMakeApiCall, logApiCall } from "@/lib/api-limit-checker";
 
 export async function POST(request: Request) {
+  // Get the user to check limits
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  
+  if (!user) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+  
+  // Check if user can make API calls (accounting for overrides)
+  const apiAccess = await canMakeApiCall(user.id);
+  if (!apiAccess.canProceed) {
+    return new Response(apiAccess.reason || "API call limit reached", { status: 429 });
+  }
+
   const {
     messages,
     selectedFile,
@@ -42,6 +58,9 @@ export async function POST(request: Request) {
       status: searchResponse.status,
     });
   }
+
+  // Log API usage (only if we get here successfully)
+  await logApiCall(user.id, "chat");
 
   const searchResults = await searchResponse.json();
 
