@@ -90,7 +90,7 @@ export const apiUsageLimit = () => {
         const { data: membershipData, error: membershipError } = await supabase
           .from("team_memberships")
           .select("api_calls_override")
-          .match({ user_id: userId, team_id: teamId })
+          .match({ profile_id: userId, team_id: teamId })
           .single();
 
         if (membershipError) {
