@@ -23,11 +23,11 @@ const links = [
     href: "/pricing",
     external: false,
   },
-  {
-    title: "Blog",
-    href: `${process.env.NEXT_PUBLIC_APP_URL}/blog`,
-    external: false,
-  },
+  // {
+  //   title: "Blog",
+  //   href: `${process.env.NEXT_PUBLIC_APP_URL}/blog`,
+  //   external: false,
+  // },
   {
     title: "API Docs",
     href: "https://aitutor-rag-api-docs.vercel.app/",
