@@ -28,7 +28,7 @@ export default async function Home() {
       {/* <WhyIBuit /> */}
       <WhatIsRag />
       <WhyChooseUs />
-      <SenjaTestimonials />
+      {/* <SenjaTestimonials /> */}
       {/* <HowToUse /> */}
       <Statistics />
       <Testimonials />
