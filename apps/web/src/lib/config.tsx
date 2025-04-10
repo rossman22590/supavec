@@ -63,7 +63,7 @@ export enum SUBSCRIPTION_TIER {
 }
 
 export const siteConfig = {
-  name: "Supavec",
+  name: "AI Tutor RAG",
   description: "Connect your data to LLMs, no matter the source.",
   cta: "Get Started",
   url: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
@@ -74,7 +74,7 @@ export const siteConfig = {
     github: "#",
   },
   hero: {
-    title: "Supavec",
+    title: "AI Tutor RAG",
     description:
       "The open-source alternative to Carbon.ai. Build powerful RAG applications with any data source, at any scale.",
     cta: "Get Started",

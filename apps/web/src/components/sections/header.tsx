@@ -33,7 +33,7 @@ export function Header() {
             Pricing
           </Link>
           <a
-            href="https://docs.supavec.com/"
+            href="https://support.myapps.ai/"
             target="_blank"
             className={cn(
               buttonVariants({ variant: "ghost" }),
