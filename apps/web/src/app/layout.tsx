@@ -11,11 +11,35 @@ import { CSPostHogProvider } from "./providers";
 export const metadata: Metadata = {
   title: {
     template: `%s - ${APP_NAME}`,
-    default: `${APP_NAME} - The open source RAG as a Service platform.`,
+    default: `${APP_NAME} - AI Tutor RAG Service platform.`,
   },
-  metadataBase: new URL("https://www.supavec.com"),
+  description: "Build powerful RAG applications with any data source, at any scale with AI Tutor RAG API.",
+  metadataBase: new URL("https://rag-api-aitutor-beta.up.railway.app"),
   alternates: {
     canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://rag-api-aitutor-beta.up.railway.app",
+    title: `${APP_NAME} - AI Tutor RAG Service platform`,
+    description: "Build powerful RAG applications with any data source, at any scale with AI Tutor RAG API.",
+    siteName: APP_NAME,
+    images: [
+      {
+        url: "https://pixiomedia.nyc3.digitaloceanspaces.com/uploads/1744259046793-meta.png",
+        width: 1200,
+        height: 630,
+        alt: "AI Tutor RAG API",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${APP_NAME} - AI Tutor RAG Service platform`,
+    description: "Build powerful RAG applications with any data source, at any scale with AI Tutor RAG API.",
+    images: ["https://pixiomedia.nyc3.digitaloceanspaces.com/uploads/1744259046793-meta.png"],
+    creator: "@tsi_org",
   },
 };
 
