@@ -29,7 +29,7 @@ export default function OnboardingCompletePage() {
           </p>
           <a
             target="_blank"
-            href="https://discord.gg/MS9CjPeXF4"
+            href="#"
             className={cn(buttonVariants({ variant: "outline" }), "w-full")}
           >
             <Icons.discord className="mr-2 size-4" />
