@@ -50,7 +50,7 @@ export const STRIPE_PRODUCT_IDS = {
 
 // API call limits for different subscription tiers
 export const API_CALL_LIMITS = {
-  FREE: 100, // Free tier: 100 API calls per month
+  FREE: 20, // Free tier: 100 API calls per month
   BASIC: 4750, // Basic tier: 750 API calls per month
   ENTERPRISE: 50000, // Enterprise tier: 5,000 API calls per month
 };
@@ -158,7 +158,7 @@ export const siteConfig = {
       },
       description: "Try AI Tutor RAG API with limited usage.",
       features: [
-        "100 API calls per month",
+        "20 API calls per month",
         "All supported file types",
         "5 requests per minute",
         "Community support",
@@ -175,7 +175,7 @@ export const siteConfig = {
       },
       description: "For developers with regular usage needs.",
       features: [
-        "750 API calls per month",
+        "4750 API calls per month",
         "All supported file types",
         "15 requests per minute",
         "Email support",
@@ -197,7 +197,7 @@ export const siteConfig = {
       },
       description: "For businesses with high-volume needs.",
       features: [
-        "5,000 API calls per month",
+        "50,000 API calls per month",
         "50 requests per minute",
         "Priority processing",
         "Priority email support",
