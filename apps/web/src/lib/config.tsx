@@ -50,7 +50,7 @@ export const STRIPE_PRODUCT_IDS = {
 
 // API call limits for different subscription tiers
 export const API_CALL_LIMITS = {
-  FREE: 20, // Free tier: 100 API calls per month
+  FREE: 50, // Free tier: 100 API calls per month
   BASIC: 4750, // Basic tier: 750 API calls per month
   ENTERPRISE: 50000, // Enterprise tier: 5,000 API calls per month
 };
