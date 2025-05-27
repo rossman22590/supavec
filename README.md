@@ -8,7 +8,7 @@
 
 https://www.supavec.com
 
-## Our simple API endpoints ✨
+## Our simple API endpoints ✨ 
 
 [docs.supavec.com](https://docs.supavec.com/).
 
