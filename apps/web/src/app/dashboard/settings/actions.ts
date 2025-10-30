@@ -28,7 +28,7 @@ export async function createStripePortalLink() {
     }
 
     const { url } = await stripe.billingPortal.sessions.create({
-      customer: userData?.stripe_customer_id,
+      customer: (userData as { stripe_customer_id: string | null } | null)?.stripe_customer_id ?? undefined,
       return_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/settings`,
     });
 
