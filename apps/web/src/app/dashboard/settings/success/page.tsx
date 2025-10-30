@@ -13,6 +13,7 @@ import {
 import { CheckCircle, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
+import type { TablesUpdate } from "@/types/supabase";
 import { STRIPE_PRODUCT_IDS, API_CALL_LIMITS, SUBSCRIPTION_TIER } from "@/lib/config";
 
 export default function SubscriptionSuccessPage() {
@@ -70,12 +71,7 @@ export default function SubscriptionSuccessPage() {
         const interval = urlParams.get('interval') || 'month';
         
         // Format the update data exactly as it's done in stripe-hooks.ts
-        const updateData: {
-          stripe_is_subscribed: boolean;
-          stripe_interval: string;
-          stripe_subscribed_product_id: string;
-          last_usage_reset_at?: string;
-        } = {
+        const updateData: TablesUpdate<"profiles"> = {
           stripe_is_subscribed: true,
           stripe_interval: interval,
           stripe_subscribed_product_id: productId,
@@ -87,7 +83,7 @@ export default function SubscriptionSuccessPage() {
 
         // Update the user's profile directly without waiting for webhook
         const { error: updateError } = await supabase
-          .from('profiles')
+          .from('profiles' as const)
           .update(updateData)
           .eq('id', user.id);
 
