@@ -42,18 +42,23 @@ export async function canMakeApiCall(userId: string): Promise<{
       .select("stripe_subscribed_product_id, stripe_is_subscribed, last_usage_reset_at")
       .eq("id", userId)
       .single();
+    const typedProfile = (profile as {
+      stripe_subscribed_product_id: string | null;
+      stripe_is_subscribed: boolean;
+      last_usage_reset_at: string | null;
+    } | null);
     
     // Default to free tier limits if profile can't be found
     let limit = API_CALL_LIMITS.FREE;
     
-    if (!profile || profileError) {
+    if (!typedProfile || profileError) {
       console.log(`Using free tier limit for user ${userId}`);
     } else {
       // Set limits based on subscription tier
-      if (profile.stripe_is_subscribed) {
-        if (profile.stripe_subscribed_product_id === "prod_RyWVPzIyQjIJH4") {
+      if (typedProfile.stripe_is_subscribed) {
+        if (typedProfile.stripe_subscribed_product_id === "prod_RyWVPzIyQjIJH4") {
           limit = API_CALL_LIMITS.BASIC;
-        } else if (profile.stripe_subscribed_product_id === "prod_RyWVvvIqMycmtX") {
+        } else if (typedProfile.stripe_subscribed_product_id === "prod_RyWVvvIqMycmtX") {
           limit = API_CALL_LIMITS.ENTERPRISE;
         }
       }
@@ -68,10 +73,11 @@ export async function canMakeApiCall(userId: string): Promise<{
         .select("api_calls_override")
         .eq("profile_id", userId)
         .maybeSingle();
-      
-      if (teamMembership?.api_calls_override) {
+      const typedTeam = (teamMembership as { api_calls_override: number | null } | null);
+
+      if (typedTeam?.api_calls_override) {
         hasOverride = true;
-        limit = teamMembership.api_calls_override;
+        limit = typedTeam.api_calls_override;
       }
     } catch (overrideError) {
       // Continue without override if error occurs
@@ -79,7 +85,7 @@ export async function canMakeApiCall(userId: string): Promise<{
     
     // 3. Get current usage
     let currentUsage = 0;
-    const startDate = getStartDateForApiUsage(profile?.last_usage_reset_at || null);
+    const startDate = getStartDateForApiUsage(typedProfile?.last_usage_reset_at || null);
     
     try {
       const { count } = await supabase
