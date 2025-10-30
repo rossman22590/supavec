@@ -8,10 +8,7 @@ export const runtime = "nodejs";
 // @ts-expect-error - Stripe is not typed
 const stripe = initStripe(process.env.STRIPE_SECRET_KEY);
 
-export async function POST(
-  req: Request,
-  context: { params: Record<string, string | string[]> }
-) {
+export async function POST(req: Request) {
   try {
     const supabase = await createClient();
 
@@ -40,8 +37,9 @@ export async function POST(
       );
     }
 
-    const priceParam = context.params?.priceId;
-    const priceId = Array.isArray(priceParam) ? priceParam[0] : priceParam;
+    const url = new URL(req.url);
+    const segments = url.pathname.split("/").filter(Boolean);
+    const priceId = segments[segments.length - 1] ?? "";
     if (!priceId) {
       return NextResponse.json(
         { status: "error", result: "Missing priceId" },
