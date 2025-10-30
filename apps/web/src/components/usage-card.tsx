@@ -81,19 +81,22 @@ export function UsageCard({
 
         // Check if there's an API calls override for the user
         const { data: user } = await supabase.auth.getUser();
-        
+
         if (user?.user?.id) {
-          // Get the team membership for this user
-          const { data: teamMemberships } = await supabase
+          const { data: membership } = await supabase
             .from("team_memberships")
             .select("api_calls_override, team_id")
             .eq("profile_id", user.user.id)
             .maybeSingle();
-            
-          if (teamMemberships?.api_calls_override) {
-            // If there's an override, use it instead of the tier-based limit
-            setApiCallOverride(teamMemberships.api_calls_override);
-            setApiCallLimit(teamMemberships.api_calls_override);
+
+          const teamMembership = (membership as {
+            api_calls_override: number | null;
+            team_id: string;
+          } | null);
+
+          if (teamMembership?.api_calls_override) {
+            setApiCallOverride(teamMembership.api_calls_override);
+            setApiCallLimit(teamMembership.api_calls_override);
           }
         }
 
