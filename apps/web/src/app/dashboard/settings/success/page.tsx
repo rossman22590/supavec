@@ -84,7 +84,7 @@ export default function SubscriptionSuccessPage() {
         // Update the user's profile directly without waiting for webhook
         const { error: updateError } = await supabase
           .from('profiles' as const)
-          .update(updateData)
+          .update(updateData as any)
           .eq('id', user.id);
 
         if (updateError) {
