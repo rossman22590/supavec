@@ -21,8 +21,8 @@ export async function generateApiKey() {
     return;
   }
 
-  const payload: TablesInsert<"api_keys"> = { team_id: teamId };
-  await supabase.from("api_keys").insert(payload);
+  const payload: TablesInsert<"api_keys">[] = [{ team_id: teamId }];
+  await supabase.from("api_keys" as const).insert(payload);
 
   revalidatePath("/dashboard");
 }
