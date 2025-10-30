@@ -10,7 +10,7 @@ const stripe = initStripe(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(
   req: Request,
-  { params }: { params: { priceId: string } }
+  context: { params: Record<string, string | string[]> }
 ) {
   try {
     const supabase = await createClient();
@@ -40,7 +40,14 @@ export async function POST(
       );
     }
 
-    const priceId = params.priceId;
+    const priceParam = context.params?.priceId;
+    const priceId = Array.isArray(priceParam) ? priceParam[0] : priceParam;
+    if (!priceId) {
+      return NextResponse.json(
+        { status: "error", result: "Missing priceId" },
+        { status: 400 }
+      );
+    }
     const lineItems = [
       {
         price: priceId,
