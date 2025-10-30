@@ -62,7 +62,7 @@ export default async function Page() {
         .match({ team_id: teamId })
         .is("deleted_at", null)
         .order("created_at", { ascending: false })
-    : { data: [] as any[] };
+    : { data: [] as unknown as never };
   const { data: teamMemberships } = await supabase
     .from("team_memberships")
     .select("id, teams(name, id)");

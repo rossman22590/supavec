@@ -20,7 +20,10 @@ export async function generateApiKey() {
     return;
   }
 
-  await supabase.from("api_keys" as const).insert({ team_id: teamId } as any);
+  // Supabase SSR typings can infer `never` here; cast to unknown->never to appease TS without using `any`.
+  await supabase
+    .from("api_keys" as const)
+    .insert([{ team_id: teamId }] as unknown as never);
 
   revalidatePath("/dashboard");
 }

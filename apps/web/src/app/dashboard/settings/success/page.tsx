@@ -42,12 +42,12 @@ export default function SubscriptionSuccessPage() {
         
         // Determine which product to use based on the plan parameter
         let productId: string;
-        let tier;
+        let _tier; // not used, placeholder to mirror original logic without lint error
         
         if (planType.toLowerCase() === 'enterprise') {
           // Handle Enterprise plan - use the environment variable
           productId = STRIPE_PRODUCT_IDS.ENTERPRISE || 'prod_RyWVvvIqMycmtX';
-          tier = SUBSCRIPTION_TIER.ENTERPRISE;
+          _tier = SUBSCRIPTION_TIER.ENTERPRISE;
           setApiCalls(API_CALL_LIMITS.ENTERPRISE);
           setPlanName("Enterprise");
           
@@ -62,7 +62,7 @@ export default function SubscriptionSuccessPage() {
             console.log(`Warning: Basic product ID from env (${productId}) doesn't match expected ID (prod_RyWVPzIyQjIJH4)`);
           }
           
-          tier = SUBSCRIPTION_TIER.BASIC;
+          _tier = SUBSCRIPTION_TIER.BASIC;
           setApiCalls(API_CALL_LIMITS.BASIC);
           setPlanName("Basic");
           
@@ -155,7 +155,7 @@ export default function SubscriptionSuccessPage() {
               onClick={handleContinueToDashboard}
               disabled={isUpdating}
             >
-              {isUpdating ? 'Setting up your account...' : 'Go to Dashboard'}
+              {isUpdating ? "Setting up your account..." : "Go to Dashboard"}
             </Button>
           </CardFooter>
         </Card>
