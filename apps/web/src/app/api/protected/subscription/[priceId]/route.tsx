@@ -26,7 +26,6 @@ export async function POST(req: Request) {
       .from("profiles")
       .select("stripe_customer_id")
       .eq("id", user.id)
-      .returns<{ stripe_customer_id: string | null }>()
       .maybeSingle();
 
     if (error) {
@@ -53,7 +52,7 @@ export async function POST(req: Request) {
       },
     ];
 
-    const stripeCustomerIdFromDb = data?.stripe_customer_id ?? null;
+    const stripeCustomerIdFromDb = (data as { stripe_customer_id: string | null } | null)?.stripe_customer_id ?? null;
     let stripeCustomerId = stripeCustomerIdFromDb;
 
     if (!stripeCustomerId) {
