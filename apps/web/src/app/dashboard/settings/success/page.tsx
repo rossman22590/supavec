@@ -15,6 +15,8 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import type { TablesUpdate } from "@/types/supabase";
 import { STRIPE_PRODUCT_IDS, API_CALL_LIMITS, SUBSCRIPTION_TIER } from "@/lib/config";
+import type { Database } from "@/types/supabase";
+import type { SupabaseClient } from "@supabase/supabase-js";
 
 export default function SubscriptionSuccessPage() {
   const [isUpdating, setIsUpdating] = useState(true);
@@ -82,9 +84,10 @@ export default function SubscriptionSuccessPage() {
         updateData.last_usage_reset_at = now.toISOString();
 
         // Update the user's profile directly without waiting for webhook
-        const { error: updateError } = await supabase
-          .from('profiles' as const)
-          .update(updateData as any)
+        const sb = supabase as unknown as SupabaseClient<Database>;
+        const { error: updateError } = await sb
+          .from('profiles')
+          .update(updateData)
           .eq('id', user.id);
 
         if (updateError) {
