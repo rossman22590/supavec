@@ -11,7 +11,7 @@
     RUN bun install
     
     # Build the application
-    RUN bun build ./src/server.ts --outfile ./dist/server.js --target node
+    RUN bun build ./src/server.ts --outfile ./dist/server.js --target node --external:langsmith
     
     # Debug: Verify build output
     RUN mkdir -p dist
