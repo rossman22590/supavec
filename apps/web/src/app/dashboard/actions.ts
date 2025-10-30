@@ -2,6 +2,7 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
+import type { TablesInsert } from "@/types/supabase";
 
 export async function generateApiKey() {
   const supabase = await createClient();
@@ -20,9 +21,8 @@ export async function generateApiKey() {
     return;
   }
 
-  await supabase.from("api_keys").insert({
-    team_id: teamId,
-  });
+  const payload: TablesInsert<"api_keys"> = { team_id: teamId };
+  await supabase.from("api_keys").insert(payload);
 
   revalidatePath("/dashboard");
 }
