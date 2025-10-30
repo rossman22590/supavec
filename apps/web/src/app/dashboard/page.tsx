@@ -51,12 +51,18 @@ export default async function Page() {
   }
 
   const { data: apiKeys } = await supabase.from("api_keys").select("*");
-  const { data: uploadedFiles } = await supabase
-    .from("files")
-    .select("*")
-    .match({ team_id: apiKeys?.[0]?.team_id })
-    .is("deleted_at", null)
-    .order("created_at", { ascending: false });
+  type ApiKeyRow = { team_id: string; api_key: string | null };
+  const apiKeysList = (apiKeys ?? []) as ApiKeyRow[];
+
+  const teamId = apiKeysList[0]?.team_id;
+  const { data: uploadedFiles } = teamId
+    ? await supabase
+        .from("files")
+        .select("*")
+        .match({ team_id: teamId })
+        .is("deleted_at", null)
+        .order("created_at", { ascending: false })
+    : { data: [] as any[] };
   const { data: teamMemberships } = await supabase
     .from("team_memberships")
     .select("id, teams(name, id)");
@@ -104,9 +110,9 @@ export default async function Page() {
                   API Key Generation
                 </h3>
                 <p>Your API key will appear here once generated.</p>
-                {Array.isArray(apiKeys) && apiKeys?.length > 0 ? (
+                {apiKeysList.length > 0 ? (
                   <span className="p-1 text-sm bg-muted-foreground/20 rounded-md select-all">
-                    {apiKeys[0].api_key}
+                    {apiKeysList[0].api_key}
                   </span>
                 ) : (
                   <GenerateForm />
@@ -118,7 +124,7 @@ export default async function Page() {
                 lastUsageResetAt={profile?.last_usage_reset_at}
               />
             </div>
-            {Array.isArray(apiKeys) && apiKeys?.length > 0 && (
+            {apiKeysList.length > 0 && (
               <div className="flex gap-4 flex-col">
                 <h3 className="text-xl font-semibold mb-4 mt-8">Playground</h3>
                 <div className="min-h-[50vh] flex-1 rounded-xl bg-muted/50 md:min-h-min p-4 border">
@@ -135,22 +141,22 @@ export default async function Page() {
                         <p className="mb-4">
                           Upload PDF files to generate embeddings.
                         </p>
-                        <UploadFormWrapper apiKey={apiKeys[0].api_key!} />
+                        <UploadFormWrapper apiKey={apiKeysList[0].api_key!} />
                         <UploadedFilesList
-                          files={uploadedFiles}
-                          apiKey={apiKeys[0].api_key!}
+                          files={uploadedFiles || []}
+                          apiKey={apiKeysList[0].api_key!}
                         />
                       </div>
                     </TabsContent>
                     <TabsContent value="content">
-                      <ContentSubmission apiKey={apiKeys[0].api_key!} />
+                      <ContentSubmission apiKey={apiKeysList[0].api_key!} />
                     </TabsContent>
                   </Tabs>
                 </div>
                 <div className="min-h-[50vh] flex-1 rounded-xl bg-muted/50 md:min-h-min p-4 border">
                   <ChatInterface
-                    uploadedFiles={uploadedFiles}
-                    apiKey={apiKeys[0].api_key!}
+                    uploadedFiles={uploadedFiles || []}
+                    apiKey={apiKeysList[0].api_key!}
                   />
                 </div>
               </div>
