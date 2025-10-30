@@ -19,6 +19,14 @@ import { validateRequestMiddleware as validateChatRequestMiddleware } from "../m
 
 export const router: IRouter = Router();
 
+// Health check endpoints for PaaS platforms (e.g., Railway)
+router.get("/", (_req, res) => {
+  res.status(200).json({ status: "ok" });
+});
+router.get("/healthz", (_req, res) => {
+  res.status(200).json({ status: "ok" });
+});
+
 router.post(
   "/upload_file",
   apiKeyAuth(),

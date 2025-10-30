@@ -33,10 +33,12 @@ export function validateEnvironmentVariables(): void {
   );
 
   if (missingVariables.length > 0) {
-    throw new Error(
-      `Missing required environment variables: ${missingVariables.join(", ")}`,
+    // Log a warning but do not crash the process; default to FREE tier logic
+    console.warn(
+      `Optional Stripe env vars missing: ${missingVariables.join(", ")}. Defaulting to FREE tier limits.`,
     );
   }
 }
 
+// Perform a soft validation at module load for visibility
 validateEnvironmentVariables();

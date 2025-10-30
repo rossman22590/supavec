@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 import axios from "redaxios";
 import initStripe from "stripe";
 
+export const runtime = "nodejs";
+
 // @ts-expect-error - Stripe is not typed
 const stripe = initStripe(process.env.STRIPE_SECRET_KEY!);
 

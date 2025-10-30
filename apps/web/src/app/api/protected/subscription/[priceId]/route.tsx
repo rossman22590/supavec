@@ -3,12 +3,14 @@ import { NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 import { supabaseAdmin } from "@/utils/supabase/admin";
 
+export const runtime = "nodejs";
+
 // @ts-expect-error - Stripe is not typed
 const stripe = initStripe(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(
   req: Request,
-  { params }: { params: Promise<{ priceId: string }> }
+  { params }: { params: { priceId: string } }
 ) {
   try {
     const supabase = await createClient();
@@ -26,8 +28,9 @@ export async function POST(
     const { data, error } = await supabase
       .from("profiles")
       .select("stripe_customer_id")
-      .match({ id: user.id })
-      .single();
+      .eq("id", user.id)
+      .returns<{ stripe_customer_id: string | null }>()
+      .maybeSingle();
 
     if (error) {
       console.error(error.message);
@@ -37,7 +40,7 @@ export async function POST(
       );
     }
 
-    const priceId = (await params).priceId;
+    const priceId = params.priceId;
     const lineItems = [
       {
         price: priceId,
@@ -45,7 +48,8 @@ export async function POST(
       },
     ];
 
-    let stripeCustomerId = data.stripe_customer_id ?? null;
+    const stripeCustomerIdFromDb = data?.stripe_customer_id ?? null;
+    let stripeCustomerId = stripeCustomerIdFromDb;
 
     if (!stripeCustomerId) {
       // search if Stripe already has this customer on their end

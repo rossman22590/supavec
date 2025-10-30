@@ -4,6 +4,8 @@ import { openai } from "@ai-sdk/openai";
 import { createClient } from "@/utils/supabase/server";
 import { canMakeApiCall, logApiCall } from "@/lib/api-limit-checker";
 
+export const runtime = "nodejs";
+
 export async function POST(request: Request) {
   // Get the user to check limits
   const supabase = await createClient();
