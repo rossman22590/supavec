@@ -21,9 +21,9 @@ export const env = createEnv({
         "NEXT_PUBLIC_SUPABASE_URL must be a valid Supabase URL",
       ),
     NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1),
-    NEXT_PUBLIC_GOOGLE_ANALYTICS: z.string().min(1),
-    NEXT_PUBLIC_POSTHOG_KEY: z.string().min(1),
-    NEXT_PUBLIC_POSTHOG_HOST: z.string().min(1),
+    NEXT_PUBLIC_GOOGLE_ANALYTICS: z.string().min(1).optional(),
+    NEXT_PUBLIC_POSTHOG_KEY: z.string().optional(),
+    NEXT_PUBLIC_POSTHOG_HOST: z.string().optional(),
     NEXT_PUBLIC_API_URL: z.string().url(),
     NEXT_PUBLIC_APP_URL: z.string().url(),
     // Stripe
