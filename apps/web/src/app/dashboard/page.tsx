@@ -36,8 +36,17 @@ export default async function Page() {
       "id, name, email, onboarding_at, stripe_is_subscribed, stripe_subscribed_product_id, last_usage_reset_at"
     )
     .single();
+  const profile = (data as {
+    id: string;
+    name: string | null;
+    email: string;
+    onboarding_at: string | null;
+    stripe_is_subscribed: boolean;
+    stripe_subscribed_product_id: string | null;
+    last_usage_reset_at: string | null;
+  } | null);
 
-  if (!data?.onboarding_at) {
+  if (!profile?.onboarding_at) {
     redirect("/onboarding");
   }
 
@@ -52,15 +61,15 @@ export default async function Page() {
     .from("team_memberships")
     .select("id, teams(name, id)");
 
-  const hasProSubscription = data?.stripe_is_subscribed ?? false;
+  const hasProSubscription = profile?.stripe_is_subscribed ?? false;
 
   return (
     <SidebarProvider>
       <AppSidebar
-        user={data}
+        user={profile}
         team={teamMemberships}
         hasProSubscription={hasProSubscription}
-        subscribedProductId={data?.stripe_subscribed_product_id}
+        subscribedProductId={profile?.stripe_subscribed_product_id}
       />
       <SidebarInset>
         <header className="border-b flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
@@ -105,8 +114,8 @@ export default async function Page() {
               </div>
 
               <UsageCard
-                subscribedProductId={data?.stripe_subscribed_product_id}
-                lastUsageResetAt={data?.last_usage_reset_at}
+                subscribedProductId={profile?.stripe_subscribed_product_id}
+                lastUsageResetAt={profile?.last_usage_reset_at}
               />
             </div>
             {Array.isArray(apiKeys) && apiKeys?.length > 0 && (
