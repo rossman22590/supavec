@@ -27,26 +27,29 @@ export const metadata: Metadata = {
 
 export default async function DashboardPage() {
   const supabase = await createClient();
-  const { data: profile } = await supabase
+  type ProfilePick = Pick<import("@/types/supabase").Tables<"profiles">, "id" | "name" | "email" | "onboarding_at">;
+  const { data: profile } = (await supabase
     .from("profiles")
     .select("id, name, email, onboarding_at")
-    .single();
+    .single()) as { data: ProfilePick | null };
 
   if (!profile?.onboarding_at) {
     redirect("/onboarding");
   }
 
-  const { data: apiKeys } = await supabase
+  type ApiKey = import("@/types/supabase").Tables<"api_keys">;
+  const { data: apiKeys } = (await supabase
     .from("api_keys")
     .select("*")
-    .order('created_at', { ascending: false });
+    .order('created_at', { ascending: false })) as { data: ApiKey[] | null };
 
-  const { data: uploadedFiles } = await supabase
+  type FileRow = import("@/types/supabase").Tables<"files">;
+  const { data: uploadedFiles } = (await supabase
     .from("files")
     .select("*")
     .match({ team_id: apiKeys?.[0]?.team_id })
     .is("deleted_at", null)
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })) as { data: FileRow[] | null };
 
   const { data: teamMemberships } = await supabase
     .from("team_memberships")
