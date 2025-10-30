@@ -139,12 +139,12 @@ export async function logApiCall(userId: string, endpoint: string): Promise<void
     }
     
     await supabase
-      .from("api_usage_logs")
-      .insert({ 
+      .from("api_usage_logs" as const)
+      .insert([{ 
         user_id: userId, 
         endpoint,
         success: true  
-      });
+      }] as unknown as never);
   } catch (error) {
     // Just log the error but don't break anything
     console.error("Error logging API call:", error);
