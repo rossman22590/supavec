@@ -9,12 +9,19 @@ export async function generateApiKey() {
     .from("team_memberships")
     .select("id, teams(name, id)");
 
-  if (!teamMemberships?.[0]?.teams?.id) {
+  type TeamMembershipWithTeam = {
+    id: string;
+    teams: { id: string; name: string | null } | null;
+  };
+
+  const memberships = (teamMemberships ?? []) as TeamMembershipWithTeam[];
+  const teamId = memberships[0]?.teams?.id;
+  if (!teamId) {
     return;
   }
 
   await supabase.from("api_keys").insert({
-    team_id: teamMemberships?.[0]?.teams?.id,
+    team_id: teamId,
   });
 
   revalidatePath("/dashboard");
