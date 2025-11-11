@@ -19,8 +19,25 @@ export async function updateSession(request: NextRequest) {
       },
     },
   );
+  // If regular Chrome has stale Supabase cookies, gracefully clear them.
+  const clearSbCookies = () => {
+    try {
+      const sbCookies = request.cookies.getAll().filter((c) => c.name.startsWith("sb-"));
+      sbCookies.forEach((c) => res.cookies.set({ name: c.name, value: "", maxAge: 0, path: "/" }));
+    } catch {}
+  };
 
-  const { data: { user } } = await supabase.auth.getUser();
+  let user = null as null | { id: string };
+  try {
+    const { data, error } = await supabase.auth.getUser();
+    if (error) {
+      clearSbCookies();
+    } else {
+      user = data.user;
+    }
+  } catch {
+    clearSbCookies();
+  }
 
   const isProtected =
     request.nextUrl.pathname.startsWith("/dashboard") ||

@@ -7,6 +7,11 @@ export class RealtimeClient {
   constructor(..._args: UnknownArgs) {}
   connect() {}
   disconnect() {}
+  // Supabase client may call this to update the JWT for realtime; no-op in Edge.
+  setAuth(_token?: string) {}
+  // Defensive no-ops for potential calls
+  removeAllChannels() {}
+  getChannels() { return []; }
 }
 
 export class RealtimeChannel {}
