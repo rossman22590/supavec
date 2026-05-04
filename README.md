@@ -2,7 +2,7 @@
   <img width="1000" alt="Supavec" src="https://github.com/user-attachments/assets/76e2c674-d683-487c-bf02-ac8bccf19e69" /> 
 </p>
 
-# [Supavec](https://www.supavec.com) - The open-source alternative to Carbon.ai. Build powerful RAG applications with any data source, at any scale.
+# [Supavec](https://www.supavec.com) - The open-source alternative to Carbon.ai. Build powerful RAG applications with any data source, at any scale. 
 
 [![](https://dcbadge.limes.pink/api/server/https://discord.gg/MS9CjPeXF4)](https://discord.gg/https://discord.gg/MS9CjPeXF4)
 
