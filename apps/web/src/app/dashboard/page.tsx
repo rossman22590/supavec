@@ -18,7 +18,7 @@ import { UploadedFilesList } from "./uploaded-files-list";
 import { ContentSubmission } from "./content-submission";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
-import { UploadFormWrapper } from "./upload-form-wrappper";
+import { UploadFormWrapper } from "./upload-form-wrapper";
 import { ChatInterface } from "./chat-interface";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/components/link";

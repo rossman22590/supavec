@@ -14,14 +14,14 @@ export const metadata: Metadata = {
     default: `${APP_NAME} - AI Tutor RAG Service platform.`,
   },
   description: "Build powerful RAG applications with any data source, at any scale with AI Tutor RAG API.",
-  metadataBase: new URL("https://rag-api-aitutor-beta.up.railway.app"),
+  metadataBase: new URL("https://rag.myapps.ai"),
   alternates: {
     canonical: "/",
   },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://rag-api-aitutor-beta.up.railway.app",
+    url: "https://rag.myapps.ai",
     title: `${APP_NAME} - AI Tutor RAG Service platform`,
     description: "Build powerful RAG applications with any data source, at any scale with AI Tutor RAG API.",
     siteName: APP_NAME,

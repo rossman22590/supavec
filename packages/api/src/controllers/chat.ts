@@ -10,6 +10,9 @@ import { generateText, pipeDataStreamToResponse, streamText } from "ai";
 
 console.log("[CHAT] Module loaded");
 
+// gemini-2.0-flash has been retired by Google; override via CHAT_MODEL if needed.
+const CHAT_MODEL = process.env.CHAT_MODEL || "gemini-2.5-flash";
+
 export interface AuthenticatedRequest extends Request {
   apiKey: string;
   userId: string;
@@ -17,6 +20,15 @@ export interface AuthenticatedRequest extends Request {
 
 export const chat = async (req: AuthenticatedRequest, res: Response) => {
   console.log("[CHAT] Request received");
+
+  if (!process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
+    console.error("[CHAT] GOOGLE_GENERATIVE_AI_API_KEY is not set");
+    return res.status(503).json({
+      success: false,
+      error: "Chat is not configured on this server (missing model API key)",
+    });
+  }
+
   try {
     const { query, k, file_ids, stream: isStreaming, apiKeyData } = req.body
       .validatedData as ValidatedChatRequest;
@@ -69,7 +81,7 @@ Question: ${query}`;
           });
 
           const result = streamText({
-            model: google("gemini-2.0-flash"),
+            model: google(CHAT_MODEL),
             prompt,
           });
 
@@ -109,7 +121,7 @@ Question: ${query}`;
 
     // Non-streaming response
     const { text: answer } = await generateText({
-      model: google("gemini-2.0-flash"),
+      model: google(CHAT_MODEL),
       prompt,
     });
 

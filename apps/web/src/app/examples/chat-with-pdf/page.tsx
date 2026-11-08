@@ -32,7 +32,7 @@ export default function ChatWithPdf() {
           <p className="text-base text-muted-foreground">
             You can build an app like this in minutes with{" "}
             <a
-              href="https://www.supavec.com"
+              href="https://rag.myapps.ai"
               className="underline text-blue-500"
             >
               {APP_NAME}

@@ -37,7 +37,7 @@ export const CTA = () => {
             );
 
             router.push(
-              "https://www.supavec.com/login?src=examples-chat-with-pdf"
+              "https://rag.myapps.ai/login?src=examples-chat-with-pdf"
             );
           }}
         />

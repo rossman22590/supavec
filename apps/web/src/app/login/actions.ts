@@ -18,7 +18,7 @@ export async function googleLogin() {
     const headersList = await headers();
     const origin = headersList.get("origin");
     // Provide a default value if origin is null
-    redirectBase = origin || "https://rag-api-aitutor-beta.up.railway.app";
+    redirectBase = origin || "https://rag.myapps.ai";
   }
 
   const { data, error } = await supabase.auth.signInWithOAuth({

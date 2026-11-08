@@ -40,7 +40,7 @@ export function MobileDrawer({ isLoggedIn }: { isLoggedIn: boolean }) {
             Pricing
           </Link>
           <a
-            href="https://docs.supavec.com/"
+            href="https://aitutor-rag-api-docs.vercel.app/"
             target="_blank"
             className={cn(buttonVariants({ variant: "ghost" }), "rounded-full")}
           >

@@ -85,7 +85,7 @@ export async function POST(request: Request) {
       });
     },
     onError: () => {
-      return "Oops, an error occured!";
+      return "Oops, an error occurred!";
     },
   });
 }
