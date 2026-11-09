@@ -18,10 +18,14 @@ console.log("[UPLOAD-FILE] Module loaded");
 const DEFAULT_CHUNK_SIZE = 1000;
 const DEFAULT_CHUNK_OVERLAP = 200;
 
+// Query string values always arrive as strings, so coerce before validating.
+// Using z.number() here rejected the documented
+// `?chunk_size=1000&chunk_overlap=200` form with a 400.
 const uploadQuerySchema = z.object({
-  chunk_size: z.number().positive().default(DEFAULT_CHUNK_SIZE),
-  chunk_overlap: z.number()
-    .positive()
+  chunk_size: z.coerce.number().int().positive().default(DEFAULT_CHUNK_SIZE),
+  chunk_overlap: z.coerce.number()
+    .int()
+    .nonnegative()
     .default(DEFAULT_CHUNK_OVERLAP),
 }).refine(
   (data) => {

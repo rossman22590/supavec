@@ -10,8 +10,10 @@ import { generateText, pipeDataStreamToResponse, streamText } from "ai";
 
 console.log("[CHAT] Module loaded");
 
-// gemini-2.0-flash has been retired by Google; override via CHAT_MODEL if needed.
-const CHAT_MODEL = process.env.CHAT_MODEL || "gemini-2.5-flash";
+// Google shut down gemini-2.0-flash on 2026-06-01 and has since deprecated
+// gemini-2.5-flash and gemini-3.5-flash. gemini-3.6-flash is the current stable
+// Flash model. Override with CHAT_MODEL when migrating again.
+const CHAT_MODEL = process.env.CHAT_MODEL || "gemini-3.6-flash";
 
 export interface AuthenticatedRequest extends Request {
   apiKey: string;
@@ -105,14 +107,19 @@ Question: ${query}`;
           dataStream.writeData({ status: "completed", timestamp: Date.now() });
         },
         onError: (error) => {
+          const message = error instanceof Error
+            ? error.message
+            : String(error);
           console.error("[CHAT] Streaming error:", error);
           logApiUsageAsync({
             endpoint: "/chat",
             userId: apiKeyData.user_id,
             success: false,
-            error: error instanceof Error ? error.message : "Unknown error",
+            error: message,
           });
-          return "An error occurred during streaming";
+          // Surface the real reason (bad model id, missing/invalid key, quota)
+          // instead of a constant string that hides every cause.
+          return `Chat model error (${CHAT_MODEL}): ${message}`;
         },
       });
 
@@ -131,8 +138,11 @@ Question: ${query}`;
       event: "/chat API Call",
     });
 
+    // `text` is the field the public docs document; `answer` is kept for
+    // existing clients that already read it.
     const apiResponse = {
       success: true,
+      text: answer,
       answer,
     };
 
@@ -146,18 +156,25 @@ Question: ${query}`;
     console.log("[CHAT] Sending successful response");
     return res.status(200).json(apiResponse);
   } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
     console.error("[CHAT] Error in chat endpoint:", error);
 
     logApiUsageAsync({
       endpoint: "/chat",
       userId: req.userId,
       success: false,
-      error: error instanceof Error ? error.message : "Unknown error",
+      error: message,
     });
 
     return res.status(500).json({
       success: false,
       error: "Internal server error",
+      // Without this the endpoint reported a retired model, a missing key and
+      // a quota error identically, which made the failure undiagnosable from
+      // the outside. Set CHAT_ERROR_DETAILS=false to go back to hiding it.
+      ...(process.env.CHAT_ERROR_DETAILS === "false"
+        ? {}
+        : { details: message, model: CHAT_MODEL }),
     });
   }
 };
