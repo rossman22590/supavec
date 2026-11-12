@@ -45,12 +45,12 @@ export default async function PricingPage() {
               Simple pricing for everyone
             </h1>
             <p className="mt-6 text-xl text-muted-foreground max-w-3xl mx-auto">
-              Choose an affordable plan that's packed with the best
+              Choose an affordable plan that&apos;s packed with the best
               features for engaging your audience, creating customer loyalty,
               and driving sales.
             </p>
             <p className="mt-4 text-lg text-primary font-medium max-w-3xl mx-auto">
-              100% refund within 14 days if you don't love it. No questions
+              100% refund within 14 days if you don&apos;t love it. No questions
               asked.
             </p>
           </div>

@@ -134,7 +134,7 @@ export default function SubscriptionSuccessPage() {
             <p className="text-muted-foreground mb-4">
               Your <strong>{planName} Plan</strong> subscription has been successfully activated. 
               You now have access to <strong>{apiCalls.toLocaleString()} API calls per month</strong>.
-              We've sent a confirmation email with your subscription details.
+              We&apos;ve sent a confirmation email with your subscription details.
             </p>
             
             {isUpdating && (

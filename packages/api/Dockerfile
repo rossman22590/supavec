@@ -16,12 +16,15 @@ WORKDIR /app
 ENV NODE_ENV=production
 
 # Bring in production dependencies
-COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps --chown=bun:bun /app/node_modules ./node_modules
 
 # Copy application source
-COPY package.json ./
-COPY tsconfig.json ./
-COPY src ./src
+COPY --chown=bun:bun package.json ./
+COPY --chown=bun:bun tsconfig.json ./
+COPY --chown=bun:bun src ./src
+
+# Never run the server as root: drop to the unprivileged user that ships with the image
+USER bun
 
 # The server defaults to port 3001 when PORT is unset
 EXPOSE 3001

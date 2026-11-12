@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import createMDX from "@next/mdx";
+import { withSentryConfig } from "@sentry/nextjs/config";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import createJiti from "jiti";
@@ -51,4 +52,10 @@ const withMDX = createMDX({
   // Add markdown plugins here, as desired
 });
 
-export default withMDX(nextConfig);
+export default withSentryConfig(withMDX(nextConfig), {
+  org: "tsi-36",
+  project: "ragapi",
+  // Source maps upload only when SENTRY_AUTH_TOKEN is set in the build environment
+  silent: !process.env.CI,
+  telemetry: false,
+});

@@ -2,6 +2,8 @@ import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
 
 export const env = createEnv({
+  // Lets the Docker image build without secrets; the server still validates at start-up.
+  skipValidation: process.env.SKIP_ENV_VALIDATION === "1",
   server: {
     SUPABASE_SERVICE_ROLE_KEY: z.string().min(1),
     DEMO_SUPA_API_KEY: z.string().min(1),
