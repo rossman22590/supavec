@@ -35,6 +35,10 @@
     # Expose the port
     EXPOSE 3010
     
+    # Never run the server as root: drop to the unprivileged user that ships with the image
+    RUN chown -R bun:bun /app
+    USER bun
+    
     # Start the application
     CMD ["bun", "./dist/server.js"]
     

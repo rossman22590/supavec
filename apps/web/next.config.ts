@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { withSentryConfig } from "@sentry/nextjs/config";
 
 const nextConfig: NextConfig = {
   async rewrites() {
@@ -21,4 +22,10 @@ const nextConfig: NextConfig = {
   skipTrailingSlashRedirect: true,
 };
 
-export default nextConfig;
+export default withSentryConfig(nextConfig, {
+  org: "tsi-36",
+  project: "ragapi",
+  // Source maps upload only when SENTRY_AUTH_TOKEN is set in the build environment
+  silent: !process.env.CI,
+  telemetry: false,
+});

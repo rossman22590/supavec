@@ -1,0 +1,4 @@
+[install]
+# Keep one shared node_modules at the repo root; the root ESLint config and the
+# Dockerfiles rely on packages being resolvable from there.
+linker = "hoisted"
