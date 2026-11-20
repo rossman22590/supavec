@@ -25,7 +25,14 @@ const nextConfig: NextConfig = {
 export default withSentryConfig(nextConfig, {
   org: "tsi-36",
   project: "ragapi",
-  // Source maps upload only when SENTRY_AUTH_TOKEN is set in the build environment
+  // Org token from the environment only - this repo is public. Without it the build still works and
+  // skips the source map upload.
+  authToken: process.env.SENTRY_AUTH_TOKEN,
   silent: !process.env.CI,
   telemetry: false,
+  // Upload source maps for all client chunks, including Next's own.
+  widenClientFileUpload: true,
+  // Send browser events through the app so ad-blockers don't drop them.
+  tunnelRoute: "/monitoring",
+  sourcemaps: { disable: !process.env.SENTRY_AUTH_TOKEN },
 });

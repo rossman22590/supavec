@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1
 # Web app (Next.js) image. Build from the REPO ROOT so the workspace lockfile is used:
 #   docker build -f apps/web/Dockerfile .
 # The server runs as the unprivileged "node" user, never as root.
@@ -26,11 +27,17 @@ ARG NEXT_PUBLIC_POSTHOG_KEY
 ARG NEXT_PUBLIC_API_URL
 ARG NEXT_PUBLIC_APP_URL
 ARG NEXT_PUBLIC_AUTH_URL
-# Optional: overrides the Sentry DSN that is built in by default
+# Sentry DSN. Not secret: it ships in the browser bundle. Sentry is off when it is not set.
 ARG NEXT_PUBLIC_SENTRY_DSN
+ARG NEXT_PUBLIC_SENTRY_ENVIRONMENT
 
 ENV NEXT_TELEMETRY_DISABLED=1
-RUN cd apps/web && bun run build
+# Optional Sentry org token for source map upload, passed as a build secret so it never lands in a layer:
+#   docker build --secret id=sentry_auth_token,env=SENTRY_AUTH_TOKEN \
+#     --build-arg NEXT_PUBLIC_SENTRY_DSN=... -f apps/web/Dockerfile .
+RUN --mount=type=secret,id=sentry_auth_token,required=false \
+    cd apps/web && \
+    SENTRY_AUTH_TOKEN="$(cat /run/secrets/sentry_auth_token 2>/dev/null || true)" bun run build
 
 # Stage 2: runtime
 FROM node:22-slim AS runner
