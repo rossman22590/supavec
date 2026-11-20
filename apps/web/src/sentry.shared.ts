@@ -1,15 +1,19 @@
-// Shared Sentry settings for the browser, Node server and edge runtimes.
-// The DSN only identifies where events are sent; it is not a secret.
+/**
+ * Sentry settings shared by the browser, Node and edge runtimes.
+ * This repo is public, so the DSN comes only from the environment: Sentry stays off unless
+ * NEXT_PUBLIC_SENTRY_DSN (or SENTRY_DSN on the server) is set, and clones/forks report nowhere.
+ */
+export const SENTRY_DSN =
+  process.env.NEXT_PUBLIC_SENTRY_DSN || process.env.SENTRY_DSN;
+
 export const sentryOptions = {
-  dsn:
-    process.env.NEXT_PUBLIC_SENTRY_DSN ??
-    "https://99aba1f240986dca35a59906a905881c@o4504625533419520.ingest.us.sentry.io/4512416310558720",
+  dsn: SENTRY_DSN,
+  enabled: Boolean(SENTRY_DSN),
   environment:
-    process.env.NEXT_PUBLIC_SENTRY_ENVIRONMENT ?? process.env.NODE_ENV,
-  // Local development stays quiet unless explicitly switched on
-  enabled:
-    process.env.NODE_ENV === "production" ||
-    process.env.NEXT_PUBLIC_SENTRY_ENABLED === "1",
-  // Record every request as a trace, not a sample
+    process.env.NEXT_PUBLIC_SENTRY_ENVIRONMENT ||
+    process.env.SENTRY_ENVIRONMENT ||
+    process.env.NODE_ENV,
+  // Keep every error and every performance trace in all environments.
+  sampleRate: 1,
   tracesSampleRate: 1,
 };

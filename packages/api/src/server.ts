@@ -1,3 +1,4 @@
+import { Sentry } from "./instrument";
 import * as dotenv from "dotenv";
 import { resolve } from "path";
 
@@ -40,9 +41,34 @@ app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
 
+// Audit trail in Sentry: one structured log line per request, including rate-limited probes
+app.use((req, res, next) => {
+  const start = Date.now();
+  res.on("finish", () => {
+    const forwarded = req.headers["x-forwarded-for"];
+    Sentry.logger.info("request", {
+      method: req.method,
+      path: req.path,
+      status: res.statusCode,
+      durationMs: Date.now() - start,
+      ip:
+        (Array.isArray(forwarded) ? forwarded[0] : forwarded)
+          ?.split(",")[0]
+          ?.trim() ??
+        req.ip ??
+        "unknown",
+      userAgent: req.headers["user-agent"] ?? "",
+    });
+  });
+  next();
+});
+
 app.use(rateLimit());
 
 app.use("/", router);
+
+// Report route errors to Sentry before the app's own handler formats the response
+Sentry.setupExpressErrorHandler(app);
 
 app.use(errorHandler);
 
